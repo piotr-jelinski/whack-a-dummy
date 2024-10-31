@@ -1,26 +1,26 @@
 import { useCallback, useState } from "react";
 import MoveMe from "./MoveMe";
-import withAnimation from "../hocs/withAnimation";
+import withAnimationStart from "../hocs/withAnimationStart";
+import withAnimationEnd from "../hocs/withAnimationEnd";
 
-const AnimatedMoveMe = withAnimation(MoveMe);
+const AnimatedMoveMe = withAnimationStart(withAnimationEnd(MoveMe));
 const anims = ["move-left", "move-up", "move-right", "move-down"];
 
 function App(): JSX.Element {
   const [anim, setAnim] = useState(0);
-  const onAnimationEnd = useCallback(
+  const onAnimation = useCallback(
     (event: AnimationEvent) => {
-      setAnim((a) => (a + 1) % anims.length);
+      if (event.type === "animationend") {
+        setAnim((a) => (a + 1) % anims.length);
+      }
     },
     [setAnim]
   );
 
   return (
     <main className="flex flex-row justify-center p-64">
-      <p>TODO</p>
-      <AnimatedMoveMe
-        animationClass={anims[anim]}
-        onAnimationEnd={onAnimationEnd}
-      />
+      <p>*</p>
+      <AnimatedMoveMe animationClass={anims[anim]} onAnimation={onAnimation} />
     </main>
   );
 }
