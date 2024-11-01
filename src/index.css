@@ -2,66 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
-.move-left {
-  --pos-x-entry: 0;
-  --pos-x-exit: -200px;
-  --anim-duration: 1400ms;
-  animation: moveLeft var(--anim-duration) forwards;
+.move {
+  --pos-x: 0;
+  --pos-y: 0;
 }
 
-@keyframes moveLeft {
-  from {
-    transform: translateX(var(--pos-x-entry));
-  }
-  to {
-    transform: translateX(var(--pos-x-exit));
-  }
+.move-left {
+  --move-x: -200px;
+  --anim-duration: 2400ms;
+  animation: moveX var(--anim-duration) both;
 }
 
 .move-right {
-  --pos-x-entry: 0;
-  --pos-x-exit: 200px;
-  --anim-duration: 1600ms;
-  animation: moveRight var(--anim-duration) forwards;
+  --move-x: 200px;
+  --anim-duration: 2600ms;
+  animation: moveX var(--anim-duration) both;
 }
 
-@keyframes moveRight {
-  from {
-    transform: translateX(var(--pos-x-entry));
-  }
+@keyframes moveX {
   to {
-    transform: translateX(var(--pos-x-exit));
+    transform: translateX(var(--move-x)) translateY(var(--pos-y));
   }
 }
 
 .move-up {
-  --pos-y-entry: 0;
-  --pos-y-exit: -200px;
-  --anim-duration: 1800ms;
-  animation: moveUp var(--anim-duration) forwards;
-}
-
-@keyframes moveUp {
-  from {
-    transform: translateY(var(--pos-y-entry));
-  }
-  to {
-    transform: translateY(var(--pos-y-exit));
-  }
+  --move-y: -200px;
+  --anim-duration: 2800ms;
+  animation: moveY var(--anim-duration) both;
 }
 
 .move-down {
-  --pos-y-entry: 0;
-  --pos-y-exit: 200px;
-  --anim-duration: 2000ms;
-  animation: moveDown var(--anim-duration) forwards;
+  --move-y: 200px;
+  --anim-duration: 3000ms;
+  animation: moveY var(--anim-duration) both;
 }
 
-@keyframes moveDown {
-  from {
-    transform: translateY(var(--pos-y-entry));
-  }
+@keyframes moveY {
   to {
-    transform: translateY(var(--pos-y-exit));
+    transform: translateX(var(--pos-x)) translateY(var(--move-y));
   }
 }

@@ -2,7 +2,7 @@ import { MutableRefObject, useEffect, useRef } from "react";
 
 export default function useAnimationStart<T extends HTMLElement>(
   onAnimationStart?: (event: AnimationEvent) => void,
-  externalRef?: MutableRefObject<T | null> // Accept an optional external ref
+  externalRef?: MutableRefObject<T | null>
 ) {
   const internalRef = useRef<T | null>(null);
   const elementRef = externalRef || internalRef;
@@ -18,7 +18,7 @@ export default function useAnimationStart<T extends HTMLElement>(
     return () => {
       currentElement.removeEventListener("animationstart", onAnimationStart);
     };
-  }, [onAnimationStart]);
+  }, [elementRef, onAnimationStart]);
 
   return elementRef;
 }
