@@ -1,3 +1,3 @@
-export default function MoveMe(): JSX.Element {
+export default function MoveMe() {
   return <div>MoveMe</div>;
 }

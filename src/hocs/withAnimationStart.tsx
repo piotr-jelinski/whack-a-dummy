@@ -2,12 +2,12 @@ import React, { MutableRefObject } from "react";
 import useAnimationStart from "../hooks/useAnimationStart";
 
 type WithAnimationStartProps = {
-  animationClass: string;
+  animationClass?: string;
   onAnimationStart?: (event: AnimationEvent) => void;
   wrapperRef?: MutableRefObject<HTMLDivElement | null>;
 };
 
-export default function withAnimationStart<P extends WithAnimationStartProps>(
+export default function withAnimationStart<P extends {}>(
   WrappedComponent: React.ComponentType<P>
 ) {
   return function AnimatedComponent(

@@ -10,7 +10,7 @@ type CuboidProps = {
   faceTop?: React.ReactNode;
 };
 
-export default function Cuboid({
+const Cuboid: React.FunctionComponent<CuboidProps> = ({
   className = "",
   faceBack = null,
   faceBottom = null,
@@ -18,7 +18,7 @@ export default function Cuboid({
   faceLeft = null,
   faceRight = null,
   faceTop = null,
-}: CuboidProps) {
+}) => {
   return (
     <div className={`cuboid ${className}`}>
       <div className="face face-back">{faceBack}</div>
@@ -29,4 +29,6 @@ export default function Cuboid({
       <div className="face face-top">{faceTop}</div>
     </div>
   );
-}
+};
+
+export default Cuboid;

@@ -8,6 +8,8 @@ import Cuboid from "./Cuboid/Cuboid";
 const AnimatedMoveMe = withAnimationTransformPreserve(
   withAnimationStart(withAnimationEnd(MoveMe))
 );
+const AnimatedCuboid = withAnimationEnd(Cuboid);
+
 const anims = ["move-left", "move-up", "move-right", "move-down"];
 
 export default function App() {
@@ -20,8 +22,8 @@ export default function App() {
   return (
     <main className="flex flex-row justify-center items-center w-full h-full">
       <div className="scene">
-        <Cuboid
-          className={isOn ? "board-on" : "board-off"}
+        <AnimatedCuboid
+          animationClass={isOn ? "board board-on" : "board board-off"}
           faceBack={
             <p>
               Back

@@ -5,15 +5,15 @@ import useAnimationTransformPreserve, {
 import type { AnimationEventType } from "../hooks/useAnimationTransformPreserve";
 
 type WithAnimationTransformPreserveProps = {
-  animationClass: string;
+  animationClass?: string;
   eventTypes?: AnimationEventType[];
   onAnimationTransformPreserve?: (event: AnimationEvent) => void;
   wrapperRef?: MutableRefObject<HTMLDivElement | null>;
 };
 
-export default function withAnimationTransformPreserve<
-  P extends WithAnimationTransformPreserveProps
->(WrappedComponent: React.ComponentType<P>) {
+export default function withAnimationTransformPreserve<P extends {}>(
+  WrappedComponent: React.ComponentType<P>
+) {
   return function AnimatedComponent(
     props: Omit<P, keyof WithAnimationTransformPreserveProps> &
       WithAnimationTransformPreserveProps

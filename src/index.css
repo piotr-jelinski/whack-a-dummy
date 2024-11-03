@@ -80,18 +80,21 @@ body,
   width: calc(var(--screen-size) * 0.8);
 }
 
-.board-off {
-  transform: translateX(0) translateY(0) translateZ(0) rotateX(0) rotateY(0)
-    rotateZ(0);
+.board {
+  transform-style: preserve-3d;
   transition: transform 1s;
 }
 
+.board-off {
+  transform: translateX(0) translateY(0) translateZ(0) rotateX(0) rotateY(0)
+    rotateZ(0);
+}
+
 .board-on {
-  transform: translateX(calc(var(--screen-size) * -0.1))
+  transform: translateX(calc(var(--screen-size) * -0.16))
     translateY(calc(var(--screen-size) * 0.5))
-    translateZ(calc(var(--screen-size) * -0.2)) rotateX(-120deg) rotateY(0)
+    translateZ(calc(var(--screen-size) * -0.1)) rotateX(-120deg) rotateY(0)
     rotateZ(-30deg);
-  transition: transform 1s;
 }
 
 .cuboid {

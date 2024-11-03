@@ -2,12 +2,12 @@ import React, { MutableRefObject } from "react";
 import useAnimationEnd from "../hooks/useAnimationEnd";
 
 type WithAnimationEndProps = {
-  animationClass: string;
+  animationClass?: string;
   onAnimationEnd?: (event: AnimationEvent) => void;
   wrapperRef?: MutableRefObject<HTMLDivElement | null>;
 };
 
-export default function withAnimationEnd<P extends WithAnimationEndProps>(
+export default function withAnimationEnd<P extends {}>(
   WrappedComponent: React.ComponentType<P>
 ) {
   return function AnimatedComponent(
