@@ -2,9 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-.three-d {
-  perspective: 1000px;
-  transform-style: preserve-3d;
+:root {
+  @media (orientation: landscape) {
+    --screen-size: 100svh;
+  }
+
+  @media (orientation: portrait) {
+    --screen-size: 100svw;
+  }
+}
+
+* {
+  outline: none;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 .transform {
@@ -54,4 +72,79 @@
       translateZ(var(--translate-z)) rotateX(var(--rotate-x))
       rotateY(var(--rotate-y)) rotateZ(var(--rotate-z));
   }
+}
+
+.scene {
+  height: calc(var(--screen-size) * 0.8);
+  perspective: calc(var(--screen-size) * 2);
+  width: calc(var(--screen-size) * 0.8);
+}
+
+.board-off {
+  transform: translateX(0) translateY(0) translateZ(0) rotateX(0) rotateY(0)
+    rotateZ(0);
+  transition: transform 1s;
+}
+
+.board-on {
+  transform: translateX(calc(var(--screen-size) * -0.1))
+    translateY(calc(var(--screen-size) * 0.5))
+    translateZ(calc(var(--screen-size) * -0.2)) rotateX(-120deg) rotateY(0)
+    rotateZ(-30deg);
+  transition: transform 1s;
+}
+
+.cuboid {
+  height: 1px;
+  position: absolute;
+  transform-style: preserve-3d;
+  width: 1px;
+}
+
+.face {
+  --face-size-x: calc(var(--screen-size) * 0.8);
+  --face-size-y: calc(var(--screen-size) * 0.8);
+  --face-size-z: calc(var(--screen-size) * 0.16);
+  position: absolute;
+  transform-style: preserve-3d;
+}
+.face-front {
+  width: var(--face-size-x);
+  height: var(--face-size-y);
+  background-color: yellow;
+  transform: translateZ(calc(var(--face-size-z) / 2));
+}
+.face-back {
+  width: var(--face-size-x);
+  height: var(--face-size-y);
+  background-color: red;
+  transform: rotateY(180deg) translateZ(calc(var(--face-size-z) / 2));
+}
+
+.face-left {
+  width: var(--face-size-z);
+  height: var(--face-size-y);
+  background-color: green;
+  transform: rotateY(-90deg) translateZ(calc(var(--face-size-z) / 2));
+}
+.face-right {
+  width: var(--face-size-z);
+  height: var(--face-size-y);
+  background-color: blue;
+  transform: rotateY(90deg)
+    translateZ(calc(var(--face-size-x) - calc(var(--face-size-z) / 2)));
+}
+
+.face-top {
+  width: var(--face-size-x);
+  height: var(--face-size-z);
+  background-color: orange;
+  transform: rotateX(90deg) translateZ(calc(var(--face-size-z) / 2));
+}
+.face-bottom {
+  width: var(--face-size-x);
+  height: var(--face-size-z);
+  background-color: indigo;
+  transform: rotateX(-90deg)
+    translateZ(calc(var(--face-size-y) - calc(var(--face-size-z) / 2)));
 }

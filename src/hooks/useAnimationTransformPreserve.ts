@@ -36,7 +36,6 @@ export default function useAnimationTransformPreserve<T extends HTMLElement>(
         const is3D = transformMatrix.includes("matrix3d");
         const match = transformMatrix.match(/matrix(?:3d)?\(([^)]+)\)/);
         const matrixValues = match ? match[1].split(", ") : [];
-        console.log("matrixValues", matrixValues);
 
         const x = parseFloat(matrixValues[is3D ? 12 : 4] ?? "0");
         const y = parseFloat(matrixValues[is3D ? 13 : 5] ?? "0");
