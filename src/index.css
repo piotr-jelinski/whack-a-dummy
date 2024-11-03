@@ -2,9 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-.move {
-  --pos-x: 0;
-  --pos-y: 0;
+.three-d {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.transform {
+  --translate-x: 0;
+  --translate-y: 0;
+  --translate-z: 0;
+  --rotate-x: 0;
+  --rotate-y: 0;
+  --rotate-z: 0;
 }
 
 .move-left {
@@ -21,7 +30,9 @@
 
 @keyframes moveX {
   to {
-    transform: translateX(var(--move-x)) translateY(var(--pos-y));
+    transform: translateX(var(--move-x)) translateY(var(--translate-y))
+      translateZ(var(--translate-z)) rotateX(var(--rotate-x))
+      rotateY(var(--rotate-y)) rotateZ(var(--rotate-z));
   }
 }
 
@@ -39,6 +50,8 @@
 
 @keyframes moveY {
   to {
-    transform: translateX(var(--pos-x)) translateY(var(--move-y));
+    transform: translateX(var(--translate-x)) translateY(var(--move-y))
+      translateZ(var(--translate-z)) rotateX(var(--rotate-x))
+      rotateY(var(--rotate-y)) rotateZ(var(--rotate-z));
   }
 }

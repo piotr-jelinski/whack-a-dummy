@@ -33,13 +33,43 @@ export default function useAnimationTransformPreserve<T extends HTMLElement>(
       const transformMatrix = computedStyle.transform;
 
       if (transformMatrix !== null && transformMatrix !== "none") {
-        const match = transformMatrix.match(/matrix\(([^)]+)\)/);
+        const is3D = transformMatrix.includes("matrix3d");
+        const match = transformMatrix.match(/matrix(?:3d)?\(([^)]+)\)/);
         const matrixValues = match ? match[1].split(", ") : [];
-        const x = parseFloat(matrixValues[4] ?? "0");
-        const y = parseFloat(matrixValues[5] ?? "0");
-        element.style.transform = `translateX(${x}px) translateY(${y}px)`;
-        element.style.setProperty("--pos-x", `${x}px`);
-        element.style.setProperty("--pos-y", `${y}px`);
+        console.log("matrixValues", matrixValues);
+
+        const x = parseFloat(matrixValues[is3D ? 12 : 4] ?? "0");
+        const y = parseFloat(matrixValues[is3D ? 13 : 5] ?? "0");
+        const z = parseFloat(is3D ? matrixValues[14] : "0");
+
+        const rotationX = Math.atan2(
+          parseFloat(matrixValues[9] ?? "0"),
+          parseFloat(matrixValues[10] ?? "1")
+        );
+        const rotationY = Math.atan2(
+          -parseFloat(matrixValues[8] ?? "0"),
+          Math.sqrt(
+            parseFloat(matrixValues[9] ?? "0") ** 2 +
+              parseFloat(matrixValues[10] ?? "1") ** 2
+          )
+        );
+        const rotationZ = Math.atan2(
+          parseFloat(matrixValues[is3D ? 4 : 1] ?? "0"),
+          parseFloat(matrixValues[0] ?? "1")
+        );
+
+        // Convert rotations to degrees
+        const rotationXDegrees = (rotationX * 180) / Math.PI;
+        const rotationYDegrees = (rotationY * 180) / Math.PI;
+        const rotationZDegrees = (rotationZ * 180) / Math.PI;
+
+        element.style.transform = `translateX(${x}px) translateY(${y}px) translateZ(${z}px) rotateX(${rotationXDegrees}deg) rotateY(${rotationYDegrees}deg) rotateZ(${rotationZDegrees}deg)`;
+        element.style.setProperty("--translate-x", `${x}px`);
+        element.style.setProperty("--translate-y", `${y}px`);
+        element.style.setProperty("--translate-z", `${z}px`);
+        element.style.setProperty("--rotation-x", `${rotationXDegrees}deg`);
+        element.style.setProperty("--rotation-y", `${rotationYDegrees}deg`);
+        element.style.setProperty("--rotation-z", `${rotationZDegrees}deg`);
       }
 
       onAnimationTransformPreserve?.(event);

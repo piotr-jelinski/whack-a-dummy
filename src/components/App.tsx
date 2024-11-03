@@ -16,10 +16,10 @@ function App(): JSX.Element {
   }, [setAnim]);
 
   return (
-    <main className="flex flex-row justify-center p-64">
+    <main className="flex flex-row justify-center p-64 three-d">
       <p className="absolute">*</p>
       <AnimatedMoveMe
-        animationClass={`move ${anims[anim]}`}
+        animationClass={`transform ${anims[anim]}`}
         onAnimationEnd={onAnimationEnd}
       />
     </main>
