@@ -1,37 +1,49 @@
 import { useCallback, useState } from "react";
 import MoveMe from "./MoveMe";
-import withAnimationStart from "../hocs/withAnimationStart";
-import withAnimationEnd from "../hocs/withAnimationEnd";
+import withAnimation from "../hocs/withAnimation";
 import withAnimationTransformPreserve from "../hocs/withAnimationTransformPreserve";
-import withTransitionStart from "../hocs/withTransitionStart";
-import withTransitionEnd from "../hocs/withTransitionEnd";
 import Cuboid from "./Cuboid/Cuboid";
 
-const AnimatedMoveMe = withAnimationTransformPreserve(
-  withAnimationStart(withAnimationEnd(MoveMe))
-);
-const TransitionCuboid = withTransitionStart(withTransitionEnd(Cuboid));
+const AnimatedMoveMe = withAnimationTransformPreserve(withAnimation(MoveMe));
+const TransitionCuboid = withAnimationTransformPreserve(withAnimation(Cuboid));
 
 const anims = ["move-left", "move-up", "move-right", "move-down"];
 
 export default function App() {
   const [anim, setAnim] = useState(0);
-  const onAnimationEnd = useCallback(() => {
-    setAnim((a) => (a + 1) % anims.length);
-  }, [setAnim]);
   const [isOn, setIsOn] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const onTransitionStart = useCallback(
-    (event: TransitionEvent) => {
-      console.log("onTransitionStart", event);
-      setIsTransitioning(true);
+
+  const toggle = useCallback(() => setIsOn((on) => !on), [setIsOn]);
+
+  const onAnimation = useCallback(
+    (event: AnimationEvent) => {
+      if (!["moveX", "moveY"].includes(event.animationName)) {
+        return;
+      }
+
+      if (event.type === "animationend") {
+        //console.log("onAnimation :: animationend", event);
+        setAnim((a) => (a + 1) % anims.length);
+      }
     },
-    [setIsTransitioning]
+    [setAnim]
   );
-  const onTransitionEnd = useCallback(
-    (event: TransitionEvent) => {
-      console.log("onTransitionEnd", event);
-      setIsTransitioning(false);
+
+  const onCuboidAnimation = useCallback(
+    (event: AnimationEvent) => {
+      if (!["boardOn", "boardOff"].includes(event.animationName)) {
+        return;
+      }
+
+      if (event.type === "animationstart") {
+        //console.log("onCuboidAnimation :: animationstart", event);
+        setIsTransitioning(true);
+      }
+      if (event.type === "animationend") {
+        //console.log("onCuboidAnimation :: animationend", event);
+        setIsTransitioning(false);
+      }
     },
     [setIsTransitioning]
   );
@@ -40,13 +52,11 @@ export default function App() {
     <main className="flex flex-row justify-center items-center w-full h-full">
       <div className="scene">
         <TransitionCuboid
+          animationClass={`board ${isOn ? "board-on" : "board-off"}`}
           faceBack={
             <p>
               Back
-              <button
-                disabled={isTransitioning}
-                onClick={() => setIsOn((on) => !on)}
-              >
+              <button disabled={isTransitioning} onClick={toggle}>
                 Toggle
               </button>
             </p>
@@ -54,20 +64,18 @@ export default function App() {
           faceBottom={<p>Bottom</p>}
           faceFront={
             <div className="flex justify-center items-center w-full h-full">
-              <button onClick={() => setIsOn((on) => !on)}>Toggle</button>
+              <button onClick={toggle}>Toggle</button>
               <p className="absolute">*</p>
               <AnimatedMoveMe
-                animationClass={`transform ${anims[anim]}`}
-                onAnimationEnd={onAnimationEnd}
+                animationClass={`move ${anims[anim]}`}
+                onAnimation={onAnimation}
               />
             </div>
           }
           faceLeft={<p>Left</p>}
           faceRight={<p>Right</p>}
           faceTop={<p>Top {isTransitioning ? "Transitioning" : ""}</p>}
-          onTransitionStart={onTransitionStart}
-          onTransitionEnd={onTransitionEnd}
-          transitionClass={isOn ? "board board-on" : "board board-off"}
+          onAnimation={onCuboidAnimation}
         />
       </div>
     </main>

@@ -25,7 +25,7 @@ body,
   width: 100%;
 }
 
-.transform {
+.move {
   --translate-x: 0;
   --translate-y: 0;
   --translate-z: 0;
@@ -36,13 +36,13 @@ body,
 
 .move-left {
   --move-x: -200px;
-  --anim-duration: 2400ms;
+  --anim-duration: 1800ms;
   animation: moveX var(--anim-duration) both;
 }
 
 .move-right {
   --move-x: 200px;
-  --anim-duration: 2600ms;
+  --anim-duration: 2700ms;
   animation: moveX var(--anim-duration) both;
 }
 
@@ -81,20 +81,32 @@ body,
 }
 
 .board {
+  --anim-duration: 1000ms;
   transform-style: preserve-3d;
-  transition: transform 1s;
 }
 
 .board-off {
-  transform: translateX(0) translateY(0) translateZ(0) rotateX(0) rotateY(0)
-    rotateZ(0);
+  animation: boardOff var(--anim-duration) both;
 }
 
 .board-on {
-  transform: translateX(calc(var(--screen-size) * -0.16))
-    translateY(calc(var(--screen-size) * 0.5))
-    translateZ(calc(var(--screen-size) * -0.1)) rotateX(-120deg) rotateY(0)
-    rotateZ(-30deg);
+  animation: boardOn var(--anim-duration) both;
+}
+
+@keyframes boardOff {
+  to {
+    transform: translateX(0) translateY(0) translateZ(0) rotateX(0) rotateY(0)
+      rotateZ(0);
+  }
+}
+
+@keyframes boardOn {
+  to {
+    transform: translateX(calc(var(--screen-size) * -0.16))
+      translateY(calc(var(--screen-size) * 0.5))
+      translateZ(calc(var(--screen-size) * -0.1)) rotateX(-120deg) rotateY(0)
+      rotateZ(-30deg);
+  }
 }
 
 .cuboid {

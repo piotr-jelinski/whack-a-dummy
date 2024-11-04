@@ -1,16 +1,15 @@
 import { MutableRefObject, useEffect, useRef } from "react";
+import { AnimationEventType } from "../types";
 
-export type AnimationEventType =
-  | "animationend"
-  | "animationiteration"
-  | "animationstart";
-export const DEFAULT_ANIMATION_EVENT_TYPES: AnimationEventType[] = [
+export const DEFAULT_ANIMATION_TRANSFORM_EVENT_TYPES: AnimationEventType[] = [
   "animationend",
 ];
 
+const SLICE_OF_PI = 180 / Math.PI;
+
 export default function useAnimationTransformPreserve<T extends HTMLElement>(
   onAnimationTransformPreserve?: (event: AnimationEvent) => void,
-  eventTypes: AnimationEventType[] = [],
+  animationTransformPreserveEventTypes: AnimationEventType[] = DEFAULT_ANIMATION_TRANSFORM_EVENT_TYPES,
   externalRef?: MutableRefObject<T | null>
 ) {
   const internalRef = useRef<T | null>(null);
@@ -23,14 +22,24 @@ export default function useAnimationTransformPreserve<T extends HTMLElement>(
     }
 
     const onAnimationTransform = (event: AnimationEvent) => {
-      if (!eventTypes.includes(event.type as AnimationEventType)) {
+      if (
+        !animationTransformPreserveEventTypes.includes(
+          event.type as AnimationEventType
+        )
+      ) {
         return;
       }
 
       const { currentTarget } = event;
       const element = currentTarget as HTMLElement;
       const computedStyle = window.getComputedStyle(element);
-      const transformMatrix = computedStyle.transform;
+      const transformMatrix =
+        computedStyle.getPropertyValue("-webkit-transform") ||
+        computedStyle.getPropertyValue("-moz-transform") ||
+        computedStyle.getPropertyValue("-ms-transform") ||
+        computedStyle.getPropertyValue("-o-transform") ||
+        computedStyle.getPropertyValue("transform") ||
+        "none";
 
       if (transformMatrix !== null && transformMatrix !== "none") {
         const is3D = transformMatrix.includes("matrix3d");
@@ -41,49 +50,52 @@ export default function useAnimationTransformPreserve<T extends HTMLElement>(
         const y = parseFloat(matrixValues[is3D ? 13 : 5] ?? "0");
         const z = parseFloat(is3D ? matrixValues[14] : "0");
 
-        const rotationX = Math.atan2(
-          parseFloat(matrixValues[9] ?? "0"),
-          parseFloat(matrixValues[10] ?? "1")
-        );
-        const rotationY = Math.atan2(
-          -parseFloat(matrixValues[8] ?? "0"),
-          Math.sqrt(
-            parseFloat(matrixValues[9] ?? "0") ** 2 +
-              parseFloat(matrixValues[10] ?? "1") ** 2
-          )
-        );
-        const rotationZ = Math.atan2(
-          parseFloat(matrixValues[is3D ? 4 : 1] ?? "0"),
-          parseFloat(matrixValues[0] ?? "1")
-        );
+        const m31 = parseFloat(matrixValues[8] ?? "0");
+        const m32 = parseFloat(matrixValues[9] ?? "0");
+        const m33 = parseFloat(matrixValues[10] ?? "1");
+        const m21 = parseFloat(matrixValues[is3D ? 4 : 1] ?? "0");
+        const m11 = parseFloat(matrixValues[0] ?? "1");
 
-        // Convert rotations to degrees
-        const rotationXDegrees = (rotationX * 180) / Math.PI;
-        const rotationYDegrees = (rotationY * 180) / Math.PI;
-        const rotationZDegrees = (rotationZ * 180) / Math.PI;
+        const rotationX =
+          Math.atan2(m32, m33) * (m33 < 0 && m32 > 0 ? -1 : 1) * SLICE_OF_PI;
+        const rotationY = Math.asin(-m31) * SLICE_OF_PI;
+        const rotationZ =
+          -Math.atan2(m21, m11) *
+          ((m21 > 0 && m11 >= 0) || (m21 <= 0 && m11 < 0) ? 1 : -1) *
+          SLICE_OF_PI;
 
-        element.style.transform = `translateX(${x}px) translateY(${y}px) translateZ(${z}px) rotateX(${rotationXDegrees}deg) rotateY(${rotationYDegrees}deg) rotateZ(${rotationZDegrees}deg)`;
+        element.style.transform = `translateX(${x}px) translateY(${y}px) translateZ(${z}px) rotateX(${rotationX}deg) rotateY(${rotationY}deg) rotateZ(${rotationZ}deg)`;
         element.style.setProperty("--translate-x", `${x}px`);
         element.style.setProperty("--translate-y", `${y}px`);
         element.style.setProperty("--translate-z", `${z}px`);
-        element.style.setProperty("--rotation-x", `${rotationXDegrees}deg`);
-        element.style.setProperty("--rotation-y", `${rotationYDegrees}deg`);
-        element.style.setProperty("--rotation-z", `${rotationZDegrees}deg`);
+        element.style.setProperty("--rotation-x", `${rotationX}deg`);
+        element.style.setProperty("--rotation-y", `${rotationY}deg`);
+        element.style.setProperty("--rotation-z", `${rotationZ}deg`);
       }
 
       onAnimationTransformPreserve?.(event);
     };
 
-    for (let i = 0; i < eventTypes.length; i++) {
-      currentElement.addEventListener(eventTypes[i], onAnimationTransform);
+    for (let i = 0; i < animationTransformPreserveEventTypes.length; i++) {
+      currentElement.addEventListener(
+        animationTransformPreserveEventTypes[i],
+        onAnimationTransform
+      );
     }
 
     return () => {
-      for (let i = 0; i < eventTypes.length; i++) {
-        currentElement.removeEventListener(eventTypes[i], onAnimationTransform);
+      for (let i = 0; i < animationTransformPreserveEventTypes.length; i++) {
+        currentElement.removeEventListener(
+          animationTransformPreserveEventTypes[i],
+          onAnimationTransform
+        );
       }
     };
-  }, [elementRef, eventTypes, onAnimationTransformPreserve]);
+  }, [
+    elementRef,
+    animationTransformPreserveEventTypes,
+    onAnimationTransformPreserve,
+  ]);
 
   return elementRef;
 }
