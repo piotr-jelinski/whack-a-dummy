@@ -1,36 +1,43 @@
 import { MutableRefObject, useEffect, useRef } from "react";
 import { AnimationEventType } from "../types";
 
+type AnimationTransformPreserveProps<T> = {
+  animationTransformPreserveEventTypes?: AnimationEventType[];
+  animationTransformPreserveNames?: string[];
+  externalRef?: MutableRefObject<T | null>;
+  onAnimationTransformPreserve?: (event: AnimationEvent) => void;
+};
+
 export const DEFAULT_ANIMATION_TRANSFORM_EVENT_TYPES: AnimationEventType[] = [
   "animationend",
 ];
 
 const SLICE_OF_PI = 180 / Math.PI;
 
-export default function useAnimationTransformPreserve<T extends HTMLElement>(
-  onAnimationTransformPreserve?: (event: AnimationEvent) => void,
-  animationTransformPreserveEventTypes: AnimationEventType[] = DEFAULT_ANIMATION_TRANSFORM_EVENT_TYPES,
-  externalRef?: MutableRefObject<T | null>
-) {
+export default function useAnimationTransformPreserve<T extends HTMLElement>({
+  animationTransformPreserveEventTypes = DEFAULT_ANIMATION_TRANSFORM_EVENT_TYPES,
+  animationTransformPreserveNames,
+  externalRef,
+  onAnimationTransformPreserve,
+}: AnimationTransformPreserveProps<T>) {
   const internalRef = useRef<T | null>(null);
   const elementRef = externalRef || internalRef;
 
   useEffect(() => {
     const currentElement = elementRef.current;
-    if (!currentElement) {
+    if (!currentElement || animationTransformPreserveEventTypes.length === 0) {
       return;
     }
 
-    const onAnimationTransform = (event: AnimationEvent) => {
+    const onAnimationTransformPreserveHandler = (event: AnimationEvent) => {
+      const { animationName, currentTarget } = event;
       if (
-        !animationTransformPreserveEventTypes.includes(
-          event.type as AnimationEventType
-        )
+        animationTransformPreserveNames &&
+        !animationTransformPreserveNames.includes(animationName)
       ) {
         return;
       }
 
-      const { currentTarget } = event;
       const element = currentTarget as HTMLElement;
       const computedStyle = window.getComputedStyle(element);
       const transformMatrix =
@@ -79,7 +86,7 @@ export default function useAnimationTransformPreserve<T extends HTMLElement>(
     for (let i = 0; i < animationTransformPreserveEventTypes.length; i++) {
       currentElement.addEventListener(
         animationTransformPreserveEventTypes[i],
-        onAnimationTransform
+        onAnimationTransformPreserveHandler
       );
     }
 
@@ -87,13 +94,14 @@ export default function useAnimationTransformPreserve<T extends HTMLElement>(
       for (let i = 0; i < animationTransformPreserveEventTypes.length; i++) {
         currentElement.removeEventListener(
           animationTransformPreserveEventTypes[i],
-          onAnimationTransform
+          onAnimationTransformPreserveHandler
         );
       }
     };
   }, [
     elementRef,
     animationTransformPreserveEventTypes,
+    animationTransformPreserveNames,
     onAnimationTransformPreserve,
   ]);
 

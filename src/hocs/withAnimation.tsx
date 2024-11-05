@@ -7,6 +7,7 @@ import type { AnimationEventType } from "../types";
 type WithAnimationProps = {
   animationClass?: string;
   animationEventTypes?: AnimationEventType[];
+  animationNames?: string[];
   onAnimation?: (event: AnimationEvent) => void;
   wrapperRef?: MutableRefObject<HTMLDivElement | null>;
 };
@@ -20,19 +21,21 @@ export default function withAnimationStart<P extends {}>(
     const {
       animationClass,
       animationEventTypes = DEFAULT_ANIMATION_EVENT_TYPES,
+      animationNames,
       onAnimation,
       wrapperRef,
       ...restProps
     } = props;
 
-    const ref = useAnimation<HTMLDivElement>(
-      onAnimation,
+    const ref = useAnimation<HTMLDivElement>({
       animationEventTypes,
-      wrapperRef
-    );
+      animationNames,
+      externalRef: wrapperRef,
+      onAnimation,
+    });
 
     return wrapperRef ? (
-      <WrappedComponent {...(restProps as P)} wrapperRef={wrapperRef} />
+      <WrappedComponent {...(props as P)} wrapperRef={wrapperRef} />
     ) : (
       <div ref={ref} className={animationClass}>
         <WrappedComponent {...(restProps as P)} wrapperRef={ref} />

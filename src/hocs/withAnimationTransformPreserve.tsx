@@ -7,6 +7,7 @@ import type { AnimationEventType } from "../types";
 type WithAnimationTransformPreserveProps = {
   animationClass?: string;
   animationTransformPreserveEventTypes?: AnimationEventType[];
+  animationTransformPreserveNames?: string[];
   onAnimationTransformPreserve?: (event: AnimationEvent) => void;
   wrapperRef?: MutableRefObject<HTMLDivElement | null>;
 };
@@ -21,16 +22,18 @@ export default function withAnimationTransformPreserve<P extends {}>(
     const {
       animationClass,
       animationTransformPreserveEventTypes = DEFAULT_ANIMATION_TRANSFORM_EVENT_TYPES,
+      animationTransformPreserveNames,
       onAnimationTransformPreserve,
       wrapperRef,
       ...restProps
     } = props;
 
-    const ref = useAnimationTransformPreserve<HTMLDivElement>(
-      onAnimationTransformPreserve,
+    const ref = useAnimationTransformPreserve<HTMLDivElement>({
       animationTransformPreserveEventTypes,
-      wrapperRef
-    );
+      animationTransformPreserveNames,
+      externalRef: wrapperRef,
+      onAnimationTransformPreserve,
+    });
 
     return wrapperRef ? (
       <WrappedComponent {...(props as P)} wrapperRef={wrapperRef} />
