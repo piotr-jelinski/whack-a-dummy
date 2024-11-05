@@ -7,6 +7,7 @@
   --scene-teardown-duration: 500ms;
   --board-setup-duration: 1000ms;
   --board-teardown-duration: 500ms;
+
   @media (orientation: landscape) {
     --screen-size: 100svh;
   }
@@ -28,6 +29,14 @@ body,
   padding: 0;
   width: 100%;
   overflow: hidden;
+  background: radial-gradient(
+      circle at center,
+      rgba(128, 128, 128, 0.9),
+      rgba(0, 0, 0, 0.8)
+    ),
+    linear-gradient(135deg, rgba(128, 128, 128, 0.6), rgba(64, 64, 64, 0.6)),
+    linear-gradient(45deg, rgba(32, 32, 32, 0.7), rgba(16, 16, 16, 0.7));
+  background-blend-mode: multiply;
 }
 
 .move {
@@ -130,26 +139,26 @@ body,
 .face-front {
   width: var(--face-size-x);
   height: var(--face-size-y);
-  background-color: yellow;
+  background-color: #a1887f;
   transform: translateZ(calc(var(--face-size-z) / 2));
 }
 .face-back {
   width: var(--face-size-x);
   height: var(--face-size-y);
-  background-color: red;
+  background-color: #a1887f;
   transform: rotateY(180deg) translateZ(calc(var(--face-size-z) / 2));
 }
 
 .face-left {
   width: var(--face-size-z);
   height: var(--face-size-y);
-  background-color: green;
+  background-color: #81685f;
   transform: rotateY(-90deg) translateZ(calc(var(--face-size-z) / 2));
 }
 .face-right {
   width: var(--face-size-z);
   height: var(--face-size-y);
-  background-color: blue;
+  background-color: #81685f;
   transform: rotateY(90deg)
     translateZ(calc(var(--face-size-x) - calc(var(--face-size-z) / 2)));
 }
@@ -157,13 +166,13 @@ body,
 .face-top {
   width: var(--face-size-x);
   height: var(--face-size-z);
-  background-color: orange;
+  background-color: #91786f;
   transform: rotateX(90deg) translateZ(calc(var(--face-size-z) / 2));
 }
 .face-bottom {
   width: var(--face-size-x);
   height: var(--face-size-z);
-  background-color: indigo;
+  background-color: #91786f;
   transform: rotateX(-90deg)
     translateZ(calc(var(--face-size-y) - calc(var(--face-size-z) / 2)));
 }
