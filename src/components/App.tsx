@@ -3,17 +3,16 @@ import withAnimationTransformPreserve from "../hocs/withAnimationTransformPreser
 import Cuboid from "./Cuboid/Cuboid";
 import Board from "./Board/Board";
 import FaceFront from "./FaceFront";
-import { GameStates, INTERACTIVE_STATES } from "../config";
+import { BoardStates, GameStates /* , INTERACTIVE_STATES */ } from "../config";
 
 const TransitionCuboid = withAnimationTransformPreserve(Cuboid);
 
-const animNames = ["sceneOn", "sceneOff"];
+const CUBOID_ANIMATION_NAMES = ["sceneOn", "sceneOff"];
 
 // on Play click:
 // 1. rotate the Game
 // 2. show the board (holes should grow into view), slide the Exit button into position, display timer, display points
-// 3. countdown from 3 to 1 on screen
-// 4. start the Game and timer (dummies should start appearing on the board)
+// 3. start the Game and timer (dummies should start appearing on the board)
 
 // on Exit click:
 // 1. stop the Game and timer (unload all dummies, count points)
@@ -34,57 +33,64 @@ export default function App() {
   const [gameState, setGameState] = useState(GameStates.OFF);
   console.log("gameState", gameState);
 
-  const toggleDisabled = !INTERACTIVE_STATES.includes(gameState);
-  const toggle = useCallback(() => {
-    setGameState((state) => {
-      if (state === GameStates.OFF) {
-        return GameStates.SCENE_SETUP;
-      }
-      if (state === GameStates.ON) {
-        return GameStates.SCENE_TEARDOWN;
-      }
+  // const stopDisabled = !INTERACTIVE_STATES.includes(gameState);
+  const play = useCallback(() => {
+    setGameState(GameStates.SCENE_SETUP);
+  }, [setGameState]);
 
-      return state;
-    });
+  const onBoardStatesChange = useCallback((boardState: BoardStates) => {
+    if (boardState === BoardStates.SET_UP) {
+      setGameState(GameStates.ON);
+    }
+    if (boardState === BoardStates.TORN_DOWN) {
+      setGameState(GameStates.SCENE_TEARDOWN);
+    }
+  }, []);
+
+  const stop = useCallback(() => {
+    setGameState(GameStates.BOARD_TEARDOWN);
   }, [setGameState]);
 
   const onCuboidAnimationTransformPreserve = useCallback(() => {
-    setGameState((state) => {
-      if (state === GameStates.SCENE_SETUP) {
+    setGameState((gState) => {
+      if (gState === GameStates.SCENE_SETUP) {
         return GameStates.BOARD_SETUP;
       }
-      if (state === GameStates.SCENE_TEARDOWN) {
-        return GameStates.BOARD_TEARDOWN;
+      if (gState === GameStates.SCENE_TEARDOWN) {
+        return GameStates.OFF;
       }
 
-      return state;
+      return gState;
     });
   }, [setGameState]);
 
   return (
     <main className="flex flex-row justify-center items-center w-full h-full">
-      <div className="scene-container">
+      <div className="scene">
         <TransitionCuboid
-          animationClass={`scene ${
-            gameState === GameStates.OFF ? "scene-off" : "scene-on"
+          animationClass={`scene-animation ${
+            [GameStates.OFF, GameStates.SCENE_TEARDOWN].includes(gameState)
+              ? "scene-off"
+              : "scene-on"
           }`}
           animationTransformPreserveEventTypes={["animationend"]}
-          animationTransformPreserveNames={animNames}
+          animationTransformPreserveNames={CUBOID_ANIMATION_NAMES}
           faceBack={
             <>
               <p className="absolute z-10">
                 Back
-                <button disabled={toggleDisabled} onClick={toggle}>
-                  Toggle
-                </button>
+                <button onClick={stop}>Stop</button>
               </p>
-              <Board gameState={gameState} />
+              <Board
+                gameState={gameState}
+                onStateChange={onBoardStatesChange}
+              />
             </>
           }
           faceBottom={<p>Bottom</p>}
           faceFront={
             <div className="flex justify-center items-center w-full h-full">
-              <button onClick={toggle}>Toggle</button>
+              <button onClick={play}>Play</button>
               <FaceFront />
             </div>
           }

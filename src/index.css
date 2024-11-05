@@ -75,22 +75,23 @@ body,
   }
 }
 
-.scene-container {
+.scene {
   height: calc(var(--screen-size) * 0.8);
   perspective: calc(var(--screen-size) * 2);
   width: calc(var(--screen-size) * 0.8);
 }
 
-.scene {
-  --anim-duration: 1000ms;
+.scene-animation {
   transform-style: preserve-3d;
 }
 
 .scene-off {
+  --anim-duration: 500ms;
   animation: sceneOff var(--anim-duration) both;
 }
 
 .scene-on {
+  --anim-duration: 1000ms;
   animation: sceneOn var(--anim-duration) both;
 }
 
@@ -177,14 +178,15 @@ body,
 }
 
 .hole-animation {
-  --anim-duration: 1000ms;
   transform-style: preserve-3d;
 }
 .hole-setup {
+  --anim-duration: 1000ms;
   animation: grow var(--anim-duration) both;
 }
 .hole-teardown {
-  animation: grow var(--anim-duration) both;
+  --anim-duration: 500ms;
+  animation: shrink var(--anim-duration) both;
 }
 
 .hole {
@@ -200,11 +202,12 @@ body,
   background: #000;
   border-radius: 50%;
   box-shadow: inset -4px -8px 16px 8px #282838;
+  transform: scale(1.2);
 }
 
 @keyframes shrink {
   from {
-    transform: scale(1.2);
+    transform: scale(1);
   }
   to {
     transform: scale(0);
@@ -216,6 +219,6 @@ body,
     transform: scale(0);
   }
   to {
-    transform: scale(1.2);
+    transform: scale(1);
   }
 }
