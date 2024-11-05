@@ -65,7 +65,7 @@ export default function App() {
   }, [setGameState]);
 
   return (
-    <main className="flex flex-row justify-center items-center w-full h-full">
+    <main className="flex justify-center items-center w-full h-full">
       <div className="scene">
         <TransitionCuboid
           animationClass={`scene-animation ${

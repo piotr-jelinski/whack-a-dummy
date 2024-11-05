@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 :root {
+  --scene-setup-duration: 1000ms;
+  --scene-teardown-duration: 500ms;
+  --board-setup-duration: 1000ms;
+  --board-teardown-duration: 500ms;
   @media (orientation: landscape) {
     --screen-size: 100svh;
   }
@@ -85,21 +89,12 @@ body,
   transform-style: preserve-3d;
 }
 
-.scene-off {
-  --anim-duration: 500ms;
-  animation: sceneOff var(--anim-duration) both;
-}
-
 .scene-on {
-  --anim-duration: 1000ms;
-  animation: sceneOn var(--anim-duration) both;
+  animation: sceneOn var(--scene-setup-duration) both;
 }
 
-@keyframes sceneOff {
-  to {
-    transform: translateX(0) translateY(0) translateZ(0) rotateX(0) rotateY(0)
-      rotateZ(0);
-  }
+.scene-off {
+  animation: sceneOff var(--scene-teardown-duration) both;
 }
 
 @keyframes sceneOn {
@@ -108,6 +103,13 @@ body,
       translateY(calc(var(--screen-size) * 0.5))
       translateZ(calc(var(--screen-size) * -0.1)) rotateX(-120deg) rotateY(0)
       rotateZ(-30deg);
+  }
+}
+
+@keyframes sceneOff {
+  to {
+    transform: translateX(0) translateY(0) translateZ(0) rotateX(0) rotateY(0)
+      rotateZ(0);
   }
 }
 
@@ -181,12 +183,10 @@ body,
   transform-style: preserve-3d;
 }
 .hole-setup {
-  --anim-duration: 1000ms;
-  animation: grow var(--anim-duration) both;
+  animation: grow var(--board-setup-duration) both;
 }
 .hole-teardown {
-  --anim-duration: 500ms;
-  animation: shrink var(--anim-duration) both;
+  animation: shrink var(--board-teardown-duration) both;
 }
 
 .hole {
