@@ -2,12 +2,12 @@ import { useCallback, useState } from "react";
 import withAnimation from "../hocs/withAnimation";
 import withAnimationTransformPreserve from "../hocs/withAnimationTransformPreserve";
 import Cuboid from "./Cuboid/Cuboid";
+import Board from "./Board/Board";
 import FaceFront from "./FaceFront";
 
 const TransitionCuboid = withAnimationTransformPreserve(withAnimation(Cuboid));
 
-// const anims = ["board-on", "board-off"];
-const animNames = ["boardOn", "boardOff"];
+const animNames = ["gameOn", "gameOff"];
 
 export default function App() {
   const [isOn, setIsOn] = useState(false);
@@ -23,13 +23,11 @@ export default function App() {
   const onCuboidAnimation = useCallback(
     (event: AnimationEvent) => {
       if (event.type === "animationstart") {
-        //console.log("onCuboidAnimation :: animationstart", event);
         setIsAnimatingCuboid(true);
         setIsAnimationPreservedCuboid(false);
       }
 
       if (event.type === "animationend") {
-        //console.log("onCuboidAnimation :: animationend", event);
         setIsAnimatingCuboid(false);
       }
     },
@@ -48,16 +46,19 @@ export default function App() {
     <main className="flex flex-row justify-center items-center w-full h-full">
       <div className="scene">
         <TransitionCuboid
-          animationClass={`board ${isOn ? "board-on" : "board-off"}`}
+          animationClass={`game ${isOn ? "game-on" : "game-off"}`}
           animationTransformPreserveNames={animNames}
           animationNames={animNames}
           faceBack={
-            <p>
-              Back
-              <button disabled={toggleDisabled} onClick={toggle}>
-                Toggle
-              </button>
-            </p>
+            <>
+              <p className="absolute z-10">
+                Back
+                <button disabled={toggleDisabled} onClick={toggle}>
+                  Toggle
+                </button>
+              </p>
+              <Board />
+            </>
           }
           faceBottom={<p>Bottom</p>}
           faceFront={

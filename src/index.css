@@ -23,6 +23,7 @@ body,
   margin: 0;
   padding: 0;
   width: 100%;
+  overflow: hidden;
 }
 
 .move {
@@ -80,27 +81,27 @@ body,
   width: calc(var(--screen-size) * 0.8);
 }
 
-.board {
+.game {
   --anim-duration: 1000ms;
   transform-style: preserve-3d;
 }
 
-.board-off {
-  animation: boardOff var(--anim-duration) both;
+.game-off {
+  animation: gameOff var(--anim-duration) both;
 }
 
-.board-on {
-  animation: boardOn var(--anim-duration) both;
+.game-on {
+  animation: gameOn var(--anim-duration) both;
 }
 
-@keyframes boardOff {
+@keyframes gameOff {
   to {
     transform: translateX(0) translateY(0) translateZ(0) rotateX(0) rotateY(0)
       rotateZ(0);
   }
 }
 
-@keyframes boardOn {
+@keyframes gameOn {
   to {
     transform: translateX(calc(var(--screen-size) * -0.16))
       translateY(calc(var(--screen-size) * 0.5))
@@ -162,4 +163,25 @@ body,
   background-color: indigo;
   transform: rotateX(-90deg)
     translateZ(calc(var(--face-size-y) - calc(var(--face-size-z) / 2)));
+}
+
+.board {
+  --fields-per-side: 5;
+  display: grid;
+  grid-template-columns: repeat(var(--fields-per-side), 1fr);
+  grid-template-rows: repeat(var(--fields-per-side), 1fr);
+  height: 100%;
+  padding: 5%;
+  transform-style: preserve-3d;
+  width: 100%;
+}
+
+.hole {
+}
+.hole-active {
+  background: #000;
+  border-radius: 50%;
+  box-shadow: inset -4px -8px 16px 8px #282838;
+  margin: -10%;
+  transform-style: preserve-3d;
 }
