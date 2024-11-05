@@ -10,7 +10,6 @@ type AnimationProps<T> = {
 
 export const DEFAULT_ANIMATION_EVENT_TYPES: AnimationEventType[] = [
   "animationend",
-  "animationstart",
 ];
 
 export default function useAnimation<T extends HTMLElement>({

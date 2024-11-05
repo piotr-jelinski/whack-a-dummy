@@ -75,33 +75,33 @@ body,
   }
 }
 
-.scene {
+.scene-container {
   height: calc(var(--screen-size) * 0.8);
   perspective: calc(var(--screen-size) * 2);
   width: calc(var(--screen-size) * 0.8);
 }
 
-.game {
+.scene {
   --anim-duration: 1000ms;
   transform-style: preserve-3d;
 }
 
-.game-off {
-  animation: gameOff var(--anim-duration) both;
+.scene-off {
+  animation: sceneOff var(--anim-duration) both;
 }
 
-.game-on {
-  animation: gameOn var(--anim-duration) both;
+.scene-on {
+  animation: sceneOn var(--anim-duration) both;
 }
 
-@keyframes gameOff {
+@keyframes sceneOff {
   to {
     transform: translateX(0) translateY(0) translateZ(0) rotateX(0) rotateY(0)
       rotateZ(0);
   }
 }
 
-@keyframes gameOn {
+@keyframes sceneOn {
   to {
     transform: translateX(calc(var(--screen-size) * -0.16))
       translateY(calc(var(--screen-size) * 0.5))
@@ -176,12 +176,46 @@ body,
   width: 100%;
 }
 
+.hole-animation {
+  --anim-duration: 1000ms;
+  transform-style: preserve-3d;
+}
+.hole-setup {
+  animation: grow var(--anim-duration) both;
+}
+.hole-teardown {
+  animation: grow var(--anim-duration) both;
+}
+
 .hole {
+  height: 100%;
+  width: 100%;
+  transform-style: preserve-3d;
+}
+.hole-inactive {
+  background: none;
+  box-shadow: none;
 }
 .hole-active {
   background: #000;
   border-radius: 50%;
   box-shadow: inset -4px -8px 16px 8px #282838;
-  margin: -10%;
-  transform-style: preserve-3d;
+}
+
+@keyframes shrink {
+  from {
+    transform: scale(1.2);
+  }
+  to {
+    transform: scale(0);
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1.2);
+  }
 }
