@@ -1,13 +1,17 @@
 import { useCallback, useState } from "react";
+import withAnimation from "../hocs/withAnimation";
 import withAnimationTransformPreserve from "../hocs/withAnimationTransformPreserve";
 import Cuboid from "./Cuboid/Cuboid";
 import Board from "./Board/Board";
+import Stop from "./Stop/Stop";
 import FaceFront from "./FaceFront";
-import { BoardStates, GameStates /* , INTERACTIVE_STATES */ } from "../config";
+import { BoardStates, GameStates, INTERACTIVE_STATES } from "../config";
 
-const TransitionCuboid = withAnimationTransformPreserve(Cuboid);
+const AnimatedCuboid = withAnimationTransformPreserve(Cuboid);
+const AnimatedStop = withAnimation(Stop);
 
 const CUBOID_ANIMATION_NAMES = ["sceneOn", "sceneOff"];
+const STOP_ANIMATION_NAMES = ["slideIn", "slideOut"];
 
 // on Play click:
 // 1. rotate the Game
@@ -31,9 +35,10 @@ const CUBOID_ANIMATION_NAMES = ["sceneOn", "sceneOff"];
 
 export default function App() {
   const [gameState, setGameState] = useState(GameStates.OFF);
-  console.log("gameState", gameState);
+  const isInteractive = INTERACTIVE_STATES.includes(gameState);
 
-  // const stopDisabled = !INTERACTIVE_STATES.includes(gameState);
+  console.log("gameState", gameState, isInteractive);
+
   const play = useCallback(() => {
     setGameState(GameStates.SCENE_SETUP);
   }, [setGameState]);
@@ -67,7 +72,7 @@ export default function App() {
   return (
     <main className="flex justify-center items-center w-full h-full">
       <div className="scene">
-        <TransitionCuboid
+        <AnimatedCuboid
           animationClass={`scene-animation ${
             [GameStates.OFF, GameStates.SCENE_TEARDOWN].includes(gameState)
               ? "scene-off"
@@ -77,17 +82,25 @@ export default function App() {
           animationTransformPreserveNames={CUBOID_ANIMATION_NAMES}
           faceBack={
             <>
-              <p className="absolute z-10">
-                Back
-                <button onClick={stop}>Stop</button>
-              </p>
               <Board
                 gameState={gameState}
                 onStateChange={onBoardStatesChange}
               />
             </>
           }
-          faceBottom={<p>Bottom</p>}
+          faceBottom={
+            <AnimatedStop
+              animationClass={`stop-animation ${
+                [GameStates.ON, GameStates.BOARD_SETUP].includes(gameState)
+                  ? "stop-setup"
+                  : "stop-teardown"
+              }`}
+              animationEventTypes={["animationend"]}
+              animationNames={STOP_ANIMATION_NAMES}
+              disabled={!isInteractive}
+              stop={stop}
+            />
+          }
           faceFront={
             <div className="flex justify-center items-center w-full h-full">
               <button onClick={play}>Play</button>

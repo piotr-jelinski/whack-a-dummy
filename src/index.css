@@ -24,6 +24,7 @@
 html,
 body,
 #root {
+  font-size: calc(var(--screen-size) * 0.015);
   height: 100%;
   margin: 0;
   padding: 0;
@@ -49,13 +50,13 @@ body,
 }
 
 .move-left {
-  --move-x: -200px;
+  --move-x: calc(var(--screen-size) * -0.2);
   --anim-duration: 1800ms;
   animation: moveX var(--anim-duration) both;
 }
 
 .move-right {
-  --move-x: 200px;
+  --move-x: calc(var(--screen-size) * 0.2);
   --anim-duration: 2700ms;
   animation: moveX var(--anim-duration) both;
 }
@@ -69,13 +70,13 @@ body,
 }
 
 .move-up {
-  --move-y: -200px;
+  --move-y: calc(var(--screen-size) * -0.2);
   --anim-duration: 2800ms;
   animation: moveY var(--anim-duration) both;
 }
 
 .move-down {
-  --move-y: 200px;
+  --move-y: calc(var(--screen-size) * 0.2);
   --anim-duration: 3000ms;
   animation: moveY var(--anim-duration) both;
 }
@@ -108,7 +109,7 @@ body,
 
 @keyframes sceneOn {
   to {
-    transform: translateX(calc(var(--screen-size) * -0.16))
+    transform: translateX(calc(var(--screen-size) * -0.18))
       translateY(calc(var(--screen-size) * 0.5))
       translateZ(calc(var(--screen-size) * -0.1)) rotateX(-120deg) rotateY(0)
       rotateZ(-30deg);
@@ -133,48 +134,50 @@ body,
   --face-size-x: calc(var(--screen-size) * 0.8);
   --face-size-y: calc(var(--screen-size) * 0.8);
   --face-size-z: calc(var(--screen-size) * 0.16);
+  display: flex;
   position: absolute;
   transform-style: preserve-3d;
 }
 .face-front {
-  width: var(--face-size-x);
-  height: var(--face-size-y);
   background-color: #a1887f;
+  height: var(--face-size-y);
   transform: translateZ(calc(var(--face-size-z) / 2));
+  width: var(--face-size-x);
 }
 .face-back {
-  width: var(--face-size-x);
-  height: var(--face-size-y);
   background-color: #a1887f;
+  height: var(--face-size-y);
   transform: rotateY(180deg) translateZ(calc(var(--face-size-z) / 2));
+  width: var(--face-size-x);
 }
 
 .face-left {
-  width: var(--face-size-z);
-  height: var(--face-size-y);
   background-color: #81685f;
+  height: var(--face-size-y);
   transform: rotateY(-90deg) translateZ(calc(var(--face-size-z) / 2));
+  width: var(--face-size-z);
 }
 .face-right {
-  width: var(--face-size-z);
-  height: var(--face-size-y);
   background-color: #81685f;
+  height: var(--face-size-y);
   transform: rotateY(90deg)
     translateZ(calc(var(--face-size-x) - calc(var(--face-size-z) / 2)));
+  width: var(--face-size-z);
 }
 
 .face-top {
-  width: var(--face-size-x);
-  height: var(--face-size-z);
   background-color: #91786f;
+  height: var(--face-size-z);
   transform: rotateX(90deg) translateZ(calc(var(--face-size-z) / 2));
+  width: var(--face-size-x);
 }
 .face-bottom {
-  width: var(--face-size-x);
-  height: var(--face-size-z);
   background-color: #91786f;
+  height: var(--face-size-z);
+  justify-content: flex-end;
   transform: rotateX(-90deg)
     translateZ(calc(var(--face-size-y) - calc(var(--face-size-z) / 2)));
+  width: var(--face-size-x);
 }
 
 .board {
@@ -229,5 +232,40 @@ body,
   }
   to {
     transform: scale(1);
+  }
+}
+
+.stop {
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  transform: rotateX(180deg);
+}
+
+.stop-animation {
+  transform-style: preserve-3d;
+}
+.stop-setup {
+  animation: slideIn var(--board-setup-duration) both;
+}
+.stop-teardown {
+  animation: slideOut var(--board-teardown-duration) both;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(var(--screen-size) * 0.4));
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateY(calc(var(--screen-size) * 0.4));
+  }
+  to {
+    transform: translateY(0);
   }
 }
