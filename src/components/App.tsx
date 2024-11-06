@@ -1,13 +1,12 @@
 import { useCallback, useState } from "react";
 import withAnimation from "../hocs/withAnimation";
-import withAnimationTransformPreserve from "../hocs/withAnimationTransformPreserve";
 import Cuboid from "./Cuboid/Cuboid";
 import Board from "./Board/Board";
 import Stop from "./Stop/Stop";
 import FaceFront from "./FaceFront";
 import { BoardStates, GameStates, INTERACTIVE_STATES } from "../config";
 
-const AnimatedCuboid = withAnimationTransformPreserve(Cuboid);
+const AnimatedCuboid = withAnimation(Cuboid);
 const AnimatedStop = withAnimation(Stop);
 
 const CUBOID_ANIMATION_NAMES = ["sceneOn", "sceneOff"];
@@ -56,7 +55,7 @@ export default function App() {
     setGameState(GameStates.BOARD_TEARDOWN);
   }, [setGameState]);
 
-  const onCuboidAnimationTransformPreserve = useCallback(() => {
+  const onCuboidAnimation = useCallback(() => {
     setGameState((gState) => {
       if (gState === GameStates.SCENE_SETUP) {
         return GameStates.BOARD_SETUP;
@@ -74,12 +73,13 @@ export default function App() {
       <div className="scene">
         <AnimatedCuboid
           animationClass={`scene-animation ${
-            [GameStates.OFF, GameStates.SCENE_TEARDOWN].includes(gameState)
-              ? "scene-off"
-              : "scene-on"
+            [GameStates.SCENE_TEARDOWN].includes(gameState) && "scene-off"
+          } ${
+            ![GameStates.OFF, GameStates.SCENE_TEARDOWN].includes(gameState) &&
+            "scene-on"
           }`}
-          animationTransformPreserveEventTypes={["animationend"]}
-          animationTransformPreserveNames={CUBOID_ANIMATION_NAMES}
+          animationEventTypes={["animationend"]}
+          animationNames={CUBOID_ANIMATION_NAMES}
           faceBack={
             <>
               <Board
@@ -110,7 +110,7 @@ export default function App() {
           faceLeft={<p>Left</p>}
           faceRight={<p>Right</p>}
           faceTop={<p>Top</p>}
-          onAnimationTransformPreserve={onCuboidAnimationTransformPreserve}
+          onAnimation={onCuboidAnimation}
         />
       </div>
     </main>

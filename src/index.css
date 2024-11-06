@@ -108,6 +108,10 @@ body,
 }
 
 @keyframes sceneOn {
+  from {
+    transform: translateX(0) translateY(0) translateZ(0) rotateX(0) rotateY(0)
+      rotateZ(0);
+  }
   to {
     transform: translateX(calc(var(--screen-size) * -0.18))
       translateY(calc(var(--screen-size) * 0.5))
@@ -117,6 +121,12 @@ body,
 }
 
 @keyframes sceneOff {
+  from {
+    transform: translateX(calc(var(--screen-size) * -0.18))
+      translateY(calc(var(--screen-size) * 0.5))
+      translateZ(calc(var(--screen-size) * -0.1)) rotateX(-120deg) rotateY(0)
+      rotateZ(-30deg);
+  }
   to {
     transform: translateX(0) translateY(0) translateZ(0) rotateX(0) rotateY(0)
       rotateZ(0);
