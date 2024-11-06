@@ -6,6 +6,7 @@ import {
 } from "../../config";
 import Hole from "./Hole";
 import withAnimation from "../../hocs/withAnimation";
+import styles from "./Board.module.scss";
 
 const AnimatedHole = withAnimation(Hole);
 
@@ -15,23 +16,19 @@ type BoardProps = {
 };
 
 const HOLE_COUNT = 25;
-const HOLE_ANIMATION_NAMES = ["grow", "shrink"];
+const HOLE_ANIMATION_NAMES = [styles.grow, styles.shrink];
 
 export default function Board({ gameState, onStateChange }: BoardProps) {
   const holesSetUpRef = useRef(0);
   const showHoles = GAME_ELEMENTS_VISIBLE_STATES.includes(gameState);
-  const animationClass =
-    (gameState === GameStates.BOARD_SETUP && "hole-setup") ||
-    (gameState === GameStates.BOARD_TEARDOWN && "hole-teardown") ||
-    "";
 
   const onHoleAnimation = useCallback(
     (event: AnimationEvent) => {
       const { animationName } = event;
-      if (animationName === "grow") {
+      if (animationName === styles.grow) {
         holesSetUpRef.current += 1;
       }
-      if (animationName === "shrink") {
+      if (animationName === styles.shrink) {
         holesSetUpRef.current -= 1;
       }
 
@@ -46,12 +43,14 @@ export default function Board({ gameState, onStateChange }: BoardProps) {
   );
 
   return (
-    <div className="board">
+    <div className={styles.board}>
       {showHoles &&
         Array.from({ length: HOLE_COUNT }).map((_, index) => {
           return (
             <AnimatedHole
-              animationClass={`hole-animation ${animationClass}`}
+              animationClass={`${styles.animation} ${
+                gameState === GameStates.BOARD_SETUP && styles.setup
+              } ${gameState === GameStates.BOARD_TEARDOWN && styles.teardown}`}
               animationEventTypes={["animationend"]}
               animationNames={HOLE_ANIMATION_NAMES}
               index={index}

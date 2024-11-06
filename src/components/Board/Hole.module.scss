@@ -1,0 +1,15 @@
+.hole {
+  height: 100%;
+  width: 100%;
+  transform-style: preserve-3d;
+  &.inactive {
+    background: none;
+    box-shadow: none;
+  }
+  &.active {
+    background: #000;
+    border-radius: 50%;
+    box-shadow: inset -4px -8px 16px 8px #282838;
+    transform: scale(1.2);
+  }
+}

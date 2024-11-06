@@ -1,0 +1,37 @@
+.board {
+  --fields-per-side: 5;
+  display: grid;
+  grid-template-columns: repeat(var(--fields-per-side), 1fr);
+  grid-template-rows: repeat(var(--fields-per-side), 1fr);
+  height: 100%;
+  padding: 5%;
+  transform-style: preserve-3d;
+  width: 100%;
+  .animation {
+    transform-style: preserve-3d;
+    &.setup {
+      animation: grow var(--board-setup-duration) both;
+    }
+    &.teardown {
+      animation: shrink var(--board-teardown-duration) both;
+    }
+  }
+}
+
+@keyframes shrink {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0);
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}

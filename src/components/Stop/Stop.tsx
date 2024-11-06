@@ -1,3 +1,5 @@
+import styles from "./Stop.module.scss";
+
 type StopProps = {
   disabled?: boolean;
   stop: () => void;
@@ -5,7 +7,7 @@ type StopProps = {
 
 export default function Stop({ disabled, stop }: StopProps) {
   return (
-    <button className="stop" disabled={disabled} onClick={stop}>
+    <button className={styles.stop} disabled={disabled} onClick={stop}>
       End
     </button>
   );

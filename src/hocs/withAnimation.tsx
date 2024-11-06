@@ -35,7 +35,7 @@ export default function withAnimationStart<P extends {}>(
     });
 
     return wrapperRef ? (
-      <WrappedComponent {...(props as P)} wrapperRef={wrapperRef} />
+      <WrappedComponent {...(props as P)} wrapperRef={ref} />
     ) : (
       <div ref={ref} className={animationClass}>
         <WrappedComponent {...(restProps as P)} wrapperRef={ref} />

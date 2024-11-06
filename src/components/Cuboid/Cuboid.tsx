@@ -1,7 +1,7 @@
 import React from "react";
+import styles from "./Cuboid.module.scss";
 
 type CuboidProps = {
-  className?: string;
   faceBack?: React.ReactNode;
   faceBottom?: React.ReactNode;
   faceFront?: React.ReactNode;
@@ -11,7 +11,6 @@ type CuboidProps = {
 };
 
 const Cuboid: React.FunctionComponent<CuboidProps> = ({
-  className = "",
   faceBack = null,
   faceBottom = null,
   faceFront = null,
@@ -20,13 +19,13 @@ const Cuboid: React.FunctionComponent<CuboidProps> = ({
   faceTop = null,
 }) => {
   return (
-    <div className={`cuboid ${className}`}>
-      <div className="face face-back">{faceBack}</div>
-      <div className="face face-bottom">{faceBottom}</div>
-      <div className="face face-front">{faceFront}</div>
-      <div className="face face-left">{faceLeft}</div>
-      <div className="face face-right">{faceRight}</div>
-      <div className="face face-top">{faceTop}</div>
+    <div className={styles.cuboid}>
+      <div className={`${styles.face} ${styles.back}`}>{faceBack}</div>
+      <div className={`${styles.face} ${styles.bottom}`}>{faceBottom}</div>
+      <div className={`${styles.face} ${styles.front}`}>{faceFront}</div>
+      <div className={`${styles.face} ${styles.left}`}>{faceLeft}</div>
+      <div className={`${styles.face} ${styles.right}`}>{faceRight}</div>
+      <div className={`${styles.face} ${styles.top}`}>{faceTop}</div>
     </div>
   );
 };

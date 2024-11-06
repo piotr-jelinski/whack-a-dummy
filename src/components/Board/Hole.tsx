@@ -1,3 +1,5 @@
+import styles from "./Hole.module.scss";
+
 type HoleProps = {
   index: number;
 };
@@ -5,8 +7,8 @@ type HoleProps = {
 export default function Hole({ index }: HoleProps) {
   return (
     <div
-      className={`hole ${
-        (index + 1) % 2 === 1 ? "hole-active" : "hole-inactive"
+      className={`${styles.hole} ${
+        (index + 1) % 2 === 1 ? styles.active : styles.inactive
       }`}
     />
   );

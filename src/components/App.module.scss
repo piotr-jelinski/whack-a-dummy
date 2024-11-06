@@ -1,0 +1,80 @@
+.flexCenter {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.fullSize {
+  height: 100%;
+  width: 100%;
+}
+
+.scene {
+  height: calc(var(--screen-size) * 0.8);
+  perspective: calc(var(--screen-size) * 2);
+  width: calc(var(--screen-size) * 0.8);
+  .sceneAnimation {
+    transform-style: preserve-3d;
+    &.on {
+      animation: sceneOn var(--scene-setup-duration) both;
+    }
+
+    &.off {
+      animation: sceneOff var(--scene-teardown-duration) both;
+    }
+  }
+}
+
+@keyframes sceneOn {
+  from {
+    transform: translateX(0) translateY(0) translateZ(0) rotateX(0) rotateY(0)
+      rotateZ(0);
+  }
+  to {
+    transform: translateX(calc(var(--screen-size) * -0.18))
+      translateY(calc(var(--screen-size) * 0.5))
+      translateZ(calc(var(--screen-size) * -0.1)) rotateX(-120deg) rotateY(0)
+      rotateZ(-30deg);
+  }
+}
+
+@keyframes sceneOff {
+  from {
+    transform: translateX(calc(var(--screen-size) * -0.18))
+      translateY(calc(var(--screen-size) * 0.5))
+      translateZ(calc(var(--screen-size) * -0.1)) rotateX(-120deg) rotateY(0)
+      rotateZ(-30deg);
+  }
+  to {
+    transform: translateX(0) translateY(0) translateZ(0) rotateX(0) rotateY(0)
+      rotateZ(0);
+  }
+}
+
+.stopAnimation {
+  transform-style: preserve-3d;
+  &.setup {
+    animation: slideInY var(--board-setup-duration) both;
+  }
+  &.teardown {
+    animation: slideOutY var(--board-teardown-duration) both;
+  }
+}
+
+@keyframes slideInY {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(var(--screen-size) * 0.4));
+  }
+}
+
+@keyframes slideOutY {
+  from {
+    transform: translateY(calc(var(--screen-size) * 0.4));
+  }
+  to {
+    transform: translateY(0);
+  }
+}

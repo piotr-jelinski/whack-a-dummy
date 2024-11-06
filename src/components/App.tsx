@@ -3,14 +3,15 @@ import withAnimation from "../hocs/withAnimation";
 import Cuboid from "./Cuboid/Cuboid";
 import Board from "./Board/Board";
 import Stop from "./Stop/Stop";
-import FaceFront from "./FaceFront";
+import FaceFront from "./Deleteme/FaceFront";
 import { BoardStates, GameStates, INTERACTIVE_STATES } from "../config";
+import styles from "./App.module.scss";
 
 const AnimatedCuboid = withAnimation(Cuboid);
 const AnimatedStop = withAnimation(Stop);
 
-const CUBOID_ANIMATION_NAMES = ["sceneOn", "sceneOff"];
-const STOP_ANIMATION_NAMES = ["slideIn", "slideOut"];
+const CUBOID_ANIMATION_NAMES = [styles.sceneOn, styles.sceneOff];
+const STOP_ANIMATION_NAMES = [styles.slideInY, styles.slideOutY];
 
 // on Play click:
 // 1. rotate the Game
@@ -69,31 +70,26 @@ export default function App() {
   }, [setGameState]);
 
   return (
-    <main className="flex justify-center items-center w-full h-full">
-      <div className="scene">
+    <main className={`${styles.flexCenter} ${styles.fullSize}`}>
+      <div className={styles.scene}>
         <AnimatedCuboid
-          animationClass={`scene-animation ${
-            [GameStates.SCENE_TEARDOWN].includes(gameState) && "scene-off"
+          animationClass={`${styles.sceneAnimation} ${
+            [GameStates.SCENE_TEARDOWN].includes(gameState) && styles.off
           } ${
             ![GameStates.OFF, GameStates.SCENE_TEARDOWN].includes(gameState) &&
-            "scene-on"
+            styles.on
           }`}
           animationEventTypes={["animationend"]}
           animationNames={CUBOID_ANIMATION_NAMES}
           faceBack={
-            <>
-              <Board
-                gameState={gameState}
-                onStateChange={onBoardStatesChange}
-              />
-            </>
+            <Board gameState={gameState} onStateChange={onBoardStatesChange} />
           }
           faceBottom={
             <AnimatedStop
-              animationClass={`stop-animation ${
+              animationClass={`${styles.stopAnimation} ${
                 [GameStates.ON, GameStates.BOARD_SETUP].includes(gameState)
-                  ? "stop-setup"
-                  : "stop-teardown"
+                  ? styles.setup
+                  : styles.teardown
               }`}
               animationEventTypes={["animationend"]}
               animationNames={STOP_ANIMATION_NAMES}
@@ -102,7 +98,7 @@ export default function App() {
             />
           }
           faceFront={
-            <div className="flex justify-center items-center w-full h-full">
+            <div className={`${styles.flexCenter} ${styles.fullSize}`}>
               <button onClick={play}>Play</button>
               <FaceFront />
             </div>
