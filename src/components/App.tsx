@@ -123,6 +123,8 @@ export default function App() {
                 }`}
                 animationEventTypes={["animationend"]}
                 animationNames={SLIDE_X_ANIMATION_NAMES}
+                gameState={gameState}
+                stop={stop}
               />
             </div>
           }

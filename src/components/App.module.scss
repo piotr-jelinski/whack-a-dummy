@@ -106,7 +106,7 @@
   overflow: hidden;
   justify-content: flex-start;
   .animation {
-    --distance: calc(22rem);
+    --distance: calc(10rem);
     &.setup {
       animation: slideInX var(--board-teardown-duration) ease-out both;
     }

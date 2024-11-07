@@ -19,17 +19,4 @@ export enum BoardStates {
   TORN_DOWN = "torn-down",
 }
 
-/* 
-const offToOn = [
-  GameStates.OFF,
-  GameStates.SCENE_SETUP,
-  GameStates.BOARD_SETUP,
-  GameStates.ON,
-];
-const onToOff = [
-  GameStates.ON,
-  GameStates.BOARD_TEARDOWN,
-  GameStates.SCENE_TEARDOWN,
-  GameStates.OFF,
-];
- */
+export const GAME_DURATION = 60;
