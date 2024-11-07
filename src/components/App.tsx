@@ -92,17 +92,19 @@ export default function App() {
             <Board gameState={gameState} onStateChange={onBoardStatesChange} />
           }
           faceBottom={
-            <AnimatedStop
-              animationClass={`${styles.stopAnimation} ${
-                [GameStates.ON, GameStates.BOARD_SETUP].includes(gameState)
-                  ? styles.setup
-                  : styles.teardown
-              }`}
-              animationEventTypes={["animationend"]}
-              animationNames={STOP_ANIMATION_NAMES}
-              disabled={!isInteractive}
-              stop={stop}
-            />
+            <div className={`${styles.fullSize} ${styles.stop}`}>
+              <AnimatedStop
+                animationClass={`${styles.animation} ${
+                  [GameStates.ON, GameStates.BOARD_SETUP].includes(gameState)
+                    ? styles.setup
+                    : styles.teardown
+                }`}
+                animationEventTypes={["animationend"]}
+                animationNames={STOP_ANIMATION_NAMES}
+                disabled={!isInteractive}
+                stop={stop}
+              />
+            </div>
           }
           faceFront={
             <div className={`${styles.flexCenter} ${styles.fullSize}`}>

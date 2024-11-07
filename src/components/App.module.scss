@@ -51,14 +51,18 @@
   }
 }
 
-.stopAnimation {
-  --distance: calc(var(--screen-size) * 0.4);
-  transform-style: preserve-3d;
-  &.setup {
-    animation: slideInY var(--board-setup-duration) both;
-  }
-  &.teardown {
-    animation: slideOutY var(--board-teardown-duration) both;
+.stop {
+  display: flex;
+  justify-content: flex-end;
+  .animation {
+    --distance: calc(var(--screen-size) * 0.4);
+    transform-style: preserve-3d;
+    &.setup {
+      animation: slideInY var(--board-setup-duration) both;
+    }
+    &.teardown {
+      animation: slideOutY var(--board-teardown-duration) both;
+    }
   }
 }
 
