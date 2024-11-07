@@ -4,6 +4,7 @@ import Cuboid from "./Cuboid/Cuboid";
 import Board from "./Board/Board";
 import Stop from "./Stop/Stop";
 import Score from "./Score/Score";
+import Timer from "./Timer/Timer";
 import { BoardStates, GameStates, INTERACTIVE_STATES } from "../config";
 import styles from "./App.module.scss";
 
@@ -13,10 +14,11 @@ import FaceFront from "./Deleteme/FaceFront";
 const AnimatedCuboid = withAnimation(Cuboid);
 const AnimatedStop = withAnimation(Stop);
 const AnimatedScore = withAnimation(Score);
+const AnimatedTimer = withAnimation(Timer);
 
 const CUBOID_ANIMATION_NAMES = [styles.sceneOn, styles.sceneOff];
 const STOP_ANIMATION_NAMES = [styles.slideInY, styles.slideOutY];
-const DROP_FLY_ANIMATION_NAMES = [styles.slideInX, styles.slideOutX];
+const SLIDE_X_ANIMATION_NAMES = [styles.slideInX, styles.slideOutX];
 
 // on Play click:
 // 1. rotate the Game
@@ -109,7 +111,19 @@ export default function App() {
             </div>
           }
           faceLeft={<p>Left</p>}
-          faceRight={<p>Right</p>}
+          faceRight={
+            <div className={`${styles.fullSize} ${styles.timer}`}>
+              <AnimatedTimer
+                animationClass={`${styles.animation} ${
+                  [GameStates.ON, GameStates.BOARD_SETUP].includes(gameState)
+                    ? styles.setup
+                    : styles.teardown
+                }`}
+                animationEventTypes={["animationend"]}
+                animationNames={SLIDE_X_ANIMATION_NAMES}
+              />
+            </div>
+          }
           faceTop={
             <div className={`${styles.fullSize} ${styles.score}`}>
               <AnimatedScore
@@ -119,7 +133,7 @@ export default function App() {
                     : styles.teardown
                 }`}
                 animationEventTypes={["animationend"]}
-                animationNames={DROP_FLY_ANIMATION_NAMES}
+                animationNames={SLIDE_X_ANIMATION_NAMES}
                 score={0}
               />
             </div>

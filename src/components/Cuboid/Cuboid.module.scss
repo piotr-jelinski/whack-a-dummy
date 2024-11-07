@@ -31,10 +31,13 @@
     }
     &.right {
       background-color: #81685f;
-      height: var(--face-size-y);
-      transform: rotateY(90deg)
-        translateZ(calc(var(--face-size-x) - calc(var(--face-size-z) / 2)));
-      width: var(--face-size-z);
+      height: var(--face-size-z);
+      transform: rotateY(90deg) rotateZ(90deg)
+        translateZ(calc(calc(var(--face-size-y) / 2)))
+        translateX(
+          calc(calc(var(--face-size-y) / 2) - calc(var(--face-size-z) / 2))
+        );
+      width: var(--face-size-y);
     }
 
     &.top {
