@@ -15,11 +15,11 @@
   width: calc(var(--screen-size) * 0.8);
   .sceneAnimation {
     transform-style: preserve-3d;
-    &.on {
+    &.setup {
       animation: sceneOn var(--scene-setup-duration) both;
     }
 
-    &.off {
+    &.teardown {
       animation: sceneOff var(--scene-teardown-duration) both;
     }
   }
@@ -52,6 +52,7 @@
 }
 
 .stopAnimation {
+  --distance: calc(var(--screen-size) * 0.4);
   transform-style: preserve-3d;
   &.setup {
     animation: slideInY var(--board-setup-duration) both;
@@ -66,15 +67,49 @@
     transform: translateY(0);
   }
   to {
-    transform: translateY(calc(var(--screen-size) * 0.4));
+    transform: translateY(var(--distance));
   }
 }
 
 @keyframes slideOutY {
   from {
-    transform: translateY(calc(var(--screen-size) * 0.4));
+    transform: translateY(var(--distance));
   }
   to {
     transform: translateY(0);
+  }
+}
+
+.score {
+  align-items: center;
+  display: flex;
+  overflow: hidden;
+  justify-content: flex-end;
+  .animation {
+    --distance: calc(-6rem);
+    &.setup {
+      animation: slideInX var(--board-teardown-duration) ease-out both;
+    }
+    &.teardown {
+      animation: slideOutX var(--board-teardown-duration) ease-in both;
+    }
+  }
+}
+
+@keyframes slideInX {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(var(--distance));
+  }
+}
+
+@keyframes slideOutX {
+  from {
+    transform: translateX(var(--distance));
+  }
+  to {
+    transform: translateX(0);
   }
 }

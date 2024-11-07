@@ -3,15 +3,20 @@ import withAnimation from "../hocs/withAnimation";
 import Cuboid from "./Cuboid/Cuboid";
 import Board from "./Board/Board";
 import Stop from "./Stop/Stop";
-import FaceFront from "./Deleteme/FaceFront";
+import Score from "./Score/Score";
 import { BoardStates, GameStates, INTERACTIVE_STATES } from "../config";
 import styles from "./App.module.scss";
 
+// delete this import
+import FaceFront from "./Deleteme/FaceFront";
+
 const AnimatedCuboid = withAnimation(Cuboid);
 const AnimatedStop = withAnimation(Stop);
+const AnimatedScore = withAnimation(Score);
 
 const CUBOID_ANIMATION_NAMES = [styles.sceneOn, styles.sceneOff];
 const STOP_ANIMATION_NAMES = [styles.slideInY, styles.slideOutY];
+const DROP_FLY_ANIMATION_NAMES = [styles.slideInX, styles.slideOutX];
 
 // on Play click:
 // 1. rotate the Game
@@ -74,10 +79,10 @@ export default function App() {
       <div className={styles.scene}>
         <AnimatedCuboid
           animationClass={`${styles.sceneAnimation} ${
-            [GameStates.SCENE_TEARDOWN].includes(gameState) && styles.off
-          } ${
             ![GameStates.OFF, GameStates.SCENE_TEARDOWN].includes(gameState) &&
-            styles.on
+            styles.setup
+          } ${
+            [GameStates.SCENE_TEARDOWN].includes(gameState) && styles.teardown
           }`}
           animationEventTypes={["animationend"]}
           animationNames={CUBOID_ANIMATION_NAMES}
@@ -105,7 +110,20 @@ export default function App() {
           }
           faceLeft={<p>Left</p>}
           faceRight={<p>Right</p>}
-          faceTop={<p>Top</p>}
+          faceTop={
+            <div className={`${styles.fullSize} ${styles.score}`}>
+              <AnimatedScore
+                animationClass={`${styles.animation} ${
+                  [GameStates.ON, GameStates.BOARD_SETUP].includes(gameState)
+                    ? styles.setup
+                    : styles.teardown
+                }`}
+                animationEventTypes={["animationend"]}
+                animationNames={DROP_FLY_ANIMATION_NAMES}
+                score={0}
+              />
+            </div>
+          }
           onAnimation={onCuboidAnimation}
         />
       </div>

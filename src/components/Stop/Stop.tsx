@@ -8,7 +8,7 @@ type StopProps = {
 export default function Stop({ disabled, stop }: StopProps) {
   return (
     <button className={styles.stop} disabled={disabled} onClick={stop}>
-      End
+      Exit
     </button>
   );
 }
