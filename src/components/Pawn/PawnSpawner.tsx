@@ -20,10 +20,15 @@ const pawnOccurrenceArray = generatePawnOccurrenceArray();
 type PawnSpawnerProps = {
   stop: () => void;
 };
+type PawnMapValue = {
+  date: number;
+  value: Pawns;
+};
 
 export default function PawnSpawner({ stop }: PawnSpawnerProps) {
-  const availableHoles = useRef(shuffle(activeHoleIndexArray));
-  const [pawns, setPawns] = useState<Map<number, Pawns>>(new Map());
+  const availableHolesRef = useRef(shuffle(activeHoleIndexArray));
+  const isDoneRef = useRef(false);
+  const [pawns, setPawns] = useState<Map<number, PawnMapValue>>(new Map());
 
   const pawnsGenerator = useMemo(
     () => shuffledPawnGenerator(pawnOccurrenceArray),
@@ -32,28 +37,31 @@ export default function PawnSpawner({ stop }: PawnSpawnerProps) {
 
   const deployPawn = useCallback(() => {
     if (
-      availableHoles.current.length === 0 ||
-      activeHoleIndexArray.length - availableHoles.current.length >=
+      availableHolesRef.current.length === 0 ||
+      activeHoleIndexArray.length - availableHolesRef.current.length >=
         MAX_PAWNS_ON_BOARD
     ) {
       return;
     }
 
     const { done, value } = pawnsGenerator.next();
-    if (!done && value) {
-      const holeIndex = availableHoles.current.pop()!;
-      setPawns((pawns) => new Map(pawns).set(holeIndex, value));
+    if (done) {
+      isDoneRef.current = true;
       return;
     }
 
-    if (availableHoles.current.length === activeHoleIndexArray.length) {
-      stop();
-    }
-  }, [pawnsGenerator, setPawns, stop]);
+    const holeIndex = availableHolesRef.current.pop()!;
+    setPawns((pawns) =>
+      new Map(pawns).set(holeIndex, { date: Date.now(), value })
+    );
+  }, [pawnsGenerator, setPawns]);
 
   const popPawn = useCallback(
     (index: number) => {
-      availableHoles.current = shuffle([...availableHoles.current, index]);
+      availableHolesRef.current = shuffle([
+        ...availableHolesRef.current,
+        index,
+      ]);
       setPawns((pawns) => {
         const newPawnMap = new Map(pawns);
         newPawnMap.delete(index);
@@ -75,14 +83,23 @@ export default function PawnSpawner({ stop }: PawnSpawnerProps) {
     return () => clearInterval(interval);
   }, [deployPawn]);
 
+  useEffect(() => {
+    if (isDoneRef.current && pawns.size === 0) {
+      stop();
+    }
+  }, [pawns, stop]);
+
   return (
     <div className={styles.spawner}>
       {holeArray.map((isActive, index) => {
         const pawn = pawns.get(index);
 
         return pawn && isActive ? (
-          <div className={styles.field} key={`${index}-${pawn}`}>
-            <Pawn index={index} pawn={pawn} remove={popPawn} />
+          <div
+            className={styles.field}
+            key={`${index}-${pawn.value}-${pawn.date}`}
+          >
+            <Pawn index={index} pawn={pawn.value} remove={popPawn} />
           </div>
         ) : (
           <div key={index} />
