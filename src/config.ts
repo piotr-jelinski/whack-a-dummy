@@ -35,7 +35,9 @@ export const HOLE_COUNT = 25;
 export const GAME_DURATION_S = 60;
 export const INITIAL_PAWN_COUNT = 5;
 export const PAWN_SPAWN_DELAY_MS = 600;
-export const START_PAWNS_ON_BOARD = 3;
+// note that this will immediately spawn 2 pawns on the board, and then the interval will start adding more
+// depending on the PAWN_SPAWN_DELAY_MS this may result in a total of up to MAX_PAWNS_ON_BOARD pawns on the board immediately
+export const START_PAWNS_ON_BOARD = 2;
 export const MAX_PAWNS_ON_BOARD = 4;
 
 export const holeArray = Array.from({ length: HOLE_COUNT }).map(

@@ -18,6 +18,7 @@ import {
 const pawnOccurrenceArray = generatePawnOccurrenceArray();
 
 type PawnSpawnerProps = {
+  addScore: (points: number) => void;
   stop: () => void;
 };
 type PawnMapValue = {
@@ -25,7 +26,7 @@ type PawnMapValue = {
   value: Pawns;
 };
 
-export default function PawnSpawner({ stop }: PawnSpawnerProps) {
+export default function PawnSpawner({ addScore, stop }: PawnSpawnerProps) {
   const availableHolesRef = useRef(shuffle(activeHoleIndexArray));
   const isDoneRef = useRef(false);
   const [pawns, setPawns] = useState<Map<number, PawnMapValue>>(new Map());
@@ -74,7 +75,7 @@ export default function PawnSpawner({ stop }: PawnSpawnerProps) {
   );
 
   useEffect(() => {
-    for (let i = 0; i < START_PAWNS_ON_BOARD - 1; i++) {
+    for (let i = 0; i < START_PAWNS_ON_BOARD; i++) {
       deployPawn();
     }
 
@@ -99,7 +100,12 @@ export default function PawnSpawner({ stop }: PawnSpawnerProps) {
             className={styles.field}
             key={`${index}-${pawn.value}-${pawn.date}`}
           >
-            <Pawn index={index} pawn={pawn.value} remove={popPawn} />
+            <Pawn
+              addScore={addScore}
+              index={index}
+              pawn={pawn.value}
+              remove={popPawn}
+            />
           </div>
         ) : (
           <div key={index} />

@@ -9,6 +9,10 @@
   width: 100%;
 }
 
+.menu {
+  flex-direction: column;
+}
+
 .board {
   position: relative;
   transform-style: preserve-3d;

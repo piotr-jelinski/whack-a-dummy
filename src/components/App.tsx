@@ -43,13 +43,13 @@ const SLIDE_X_ANIMATION_NAMES = [styles.slideInX, styles.slideOutX];
 
 export default function App() {
   const [gameState, setGameState] = useState(GameStates.OFF);
+  const [score, setScore] = useState(0);
   const isInteractive = INTERACTIVE_STATES.includes(gameState);
 
-  console.log("gameState", gameState, isInteractive);
-
   const play = useCallback(() => {
+    setScore(0);
     setGameState(GameStates.SCENE_SETUP);
-  }, [setGameState]);
+  }, [setGameState, setScore]);
 
   const onBoardStatesChange = useCallback((boardState: BoardStates) => {
     if (boardState === BoardStates.SET_UP) {
@@ -77,6 +77,13 @@ export default function App() {
     });
   }, [setGameState]);
 
+  const addScore = useCallback(
+    (points: number) => {
+      setScore((s) => s + points);
+    },
+    [setScore]
+  );
+
   return (
     <main className={`${styles.flexCenter} ${styles.fullSize}`}>
       <div className={styles.scene}>
@@ -91,7 +98,9 @@ export default function App() {
           animationNames={CUBOID_ANIMATION_NAMES}
           faceBack={
             <div className={`${styles.fullSize} ${styles.board}`}>
-              {gameState === GameStates.ON && <PawnSpawner stop={stop} />}
+              {gameState === GameStates.ON && (
+                <PawnSpawner addScore={addScore} stop={stop} />
+              )}
               <Board
                 gameState={gameState}
                 onStateChange={onBoardStatesChange}
@@ -114,8 +123,11 @@ export default function App() {
             </div>
           }
           faceFront={
-            <div className={`${styles.flexCenter} ${styles.fullSize}`}>
+            <div
+              className={`${styles.flexCenter} ${styles.fullSize} ${styles.menu}`}
+            >
               <button onClick={play}>Play</button>
+              <div>Last score: {score}</div>
               <FaceFront />
             </div>
           }
@@ -145,7 +157,7 @@ export default function App() {
                 }`}
                 animationEventTypes={["animationend"]}
                 animationNames={SLIDE_X_ANIMATION_NAMES}
-                score={0}
+                score={score}
               />
             </div>
           }

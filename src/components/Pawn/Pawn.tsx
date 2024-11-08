@@ -1,18 +1,25 @@
 import camelCase from "lodash.camelcase";
-import { Pawns } from "../../config";
+import { pawnMap, Pawns } from "../../config";
 import styles from "./Pawn.module.scss";
 import useAnimation from "../../hooks/useAnimation";
 import { useCallback } from "react";
 
 type PawnProps = {
+  addScore: (points: number) => void;
   index: number;
   pawn: Pawns;
   remove: (index: number) => void;
 };
 
-export default function Pawn({ index, pawn, remove }: PawnProps) {
+export default function Pawn({ addScore, index, pawn, remove }: PawnProps) {
   const pawnClassName = camelCase(`${pawn}`);
+
   const removePawn = useCallback(() => remove(index), [index, remove]);
+  const onClick = useCallback(() => {
+    addScore(pawnMap.get(pawn)!.points);
+    removePawn();
+  }, [addScore, pawn, removePawn]);
+
   const ref = useAnimation<HTMLButtonElement>({
     animationEventTypes: ["animationend"],
     animationNames: [styles.popUpAndDown],
@@ -22,7 +29,7 @@ export default function Pawn({ index, pawn, remove }: PawnProps) {
   return (
     <button
       className={`${styles.pawn} ${styles[pawnClassName]}`}
-      onClick={removePawn}
+      onClick={onClick}
       ref={ref}
     ></button>
   );
