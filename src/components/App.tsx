@@ -1,4 +1,5 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import useLocalStorage from "use-local-storage";
 import withAnimation from "../hocs/withAnimation";
 import Cuboid from "./Cuboid/Cuboid";
 import Board from "./Board/Board";
@@ -9,47 +10,38 @@ import { BoardStates, GameStates, INTERACTIVE_STATES } from "../config";
 import PawnSpawner from "./Pawn/PawnSpawner";
 import styles from "./App.module.scss";
 
-// delete this import
-import FaceFront from "./Deleteme/FaceFront";
-
 const AnimatedCuboid = withAnimation(Cuboid);
 const AnimatedStop = withAnimation(Stop);
 const AnimatedScore = withAnimation(Score);
 const AnimatedTimer = withAnimation(Timer);
 
 const CUBOID_ANIMATION_NAMES = [styles.sceneOn, styles.sceneOff];
-const STOP_ANIMATION_NAMES = [styles.slideInY, styles.slideOutY];
-const SLIDE_X_ANIMATION_NAMES = [styles.slideInX, styles.slideOutX];
 
-// on Play click:
-// 1. rotate the Game
-// 2. show the board (holes should grow into view), slide the Exit button into position, display timer, display points
-// 3. start the Game and timer (dummies should start appearing on the board)
-
-// on Exit click:
-// 1. stop the Game and timer (unload all dummies, count points)
-// 2. slide the Exit button out of view, hide the timer and points, hide the board (holes should shrink out of view)
-// 3. rotate the Game back to the original position
-
-// on Timer end:
-// 1. stop the Game (unload all dummies, count points)
-// 2. slide the Exit button out of view, hide the timer and points, hide the board (holes should shrink out of view)
-// 3. rotate the Game back to the original position
-
-// on Last dummy removed:
-// 1. stop the Game and timer (count points)
-// 2. slide the Exit button out of view, hide the timer and points, hide the board (holes should shrink out of view)
-// 3. rotate the Game back to the original position
+const STORAGE_KEY_LAST_SCORE = "lastScore";
+const STORAGE_KEY_BEST_SCORE = "bestScore";
 
 export default function App() {
+  const [lastScore, setLastScore] = useLocalStorage(STORAGE_KEY_LAST_SCORE, 0);
+  const [bestScore, setBestScore] = useLocalStorage(STORAGE_KEY_BEST_SCORE, 0);
+
   const [gameState, setGameState] = useState(GameStates.OFF);
   const [score, setScore] = useState(0);
-  const isInteractive = INTERACTIVE_STATES.includes(gameState);
 
   const play = useCallback(() => {
     setScore(0);
     setGameState(GameStates.SCENE_SETUP);
   }, [setGameState, setScore]);
+
+  const stop = useCallback(() => {
+    setGameState(GameStates.BOARD_TEARDOWN);
+  }, [setGameState]);
+
+  const addScore = useCallback(
+    (points: number) => {
+      setScore((s) => s + points);
+    },
+    [setScore]
+  );
 
   const onBoardStatesChange = useCallback((boardState: BoardStates) => {
     if (boardState === BoardStates.SET_UP) {
@@ -59,10 +51,6 @@ export default function App() {
       setGameState(GameStates.SCENE_TEARDOWN);
     }
   }, []);
-
-  const stop = useCallback(() => {
-    setGameState(GameStates.BOARD_TEARDOWN);
-  }, [setGameState]);
 
   const onCuboidAnimation = useCallback(() => {
     setGameState((gState) => {
@@ -77,24 +65,29 @@ export default function App() {
     });
   }, [setGameState]);
 
-  const addScore = useCallback(
-    (points: number) => {
-      setScore((s) => s + points);
-    },
-    [setScore]
-  );
+  useEffect(() => {
+    if (gameState === GameStates.OFF && score > 0) {
+      setLastScore(score);
+      setBestScore(Math.max(bestScore, score));
+    }
+  }, [bestScore, gameState, lastScore, score, setBestScore, setLastScore]);
+
+  const innerFaceAnimClass = [GameStates.ON, GameStates.BOARD_SETUP].includes(
+    gameState
+  )
+    ? styles.setup
+    : styles.teardown;
+  const cuboidAnimClass =
+    (![GameStates.OFF, GameStates.SCENE_TEARDOWN].includes(gameState) &&
+      styles.setup) ||
+    ([GameStates.SCENE_TEARDOWN].includes(gameState) && styles.teardown) ||
+    "";
 
   return (
     <main className={`${styles.flexCenter} ${styles.fullSize}`}>
       <div className={styles.scene}>
         <AnimatedCuboid
-          animationClass={`${styles.animation} ${
-            ![GameStates.OFF, GameStates.SCENE_TEARDOWN].includes(gameState) &&
-            styles.setup
-          } ${
-            [GameStates.SCENE_TEARDOWN].includes(gameState) && styles.teardown
-          }`}
-          animationEventTypes={["animationend"]}
+          animationClass={`${styles.animation} ${cuboidAnimClass}`}
           animationNames={CUBOID_ANIMATION_NAMES}
           faceBack={
             <div className={`${styles.fullSize} ${styles.board}`}>
@@ -110,14 +103,8 @@ export default function App() {
           faceBottom={
             <div className={`${styles.fullSize} ${styles.stop}`}>
               <AnimatedStop
-                animationClass={`${styles.animation} ${
-                  [GameStates.ON, GameStates.BOARD_SETUP].includes(gameState)
-                    ? styles.setup
-                    : styles.teardown
-                }`}
-                animationEventTypes={["animationend"]}
-                animationNames={STOP_ANIMATION_NAMES}
-                disabled={!isInteractive}
+                animationClass={`${styles.animation} ${innerFaceAnimClass}`}
+                disabled={!INTERACTIVE_STATES.includes(gameState)}
                 stop={stop}
               />
             </div>
@@ -127,21 +114,15 @@ export default function App() {
               className={`${styles.flexCenter} ${styles.fullSize} ${styles.menu}`}
             >
               <button onClick={play}>Play</button>
-              <div>Last score: {score}</div>
-              <FaceFront />
+              <div>Last score: {lastScore}</div>
+              <div>Best score: {bestScore}</div>
             </div>
           }
           faceLeft={<p>Left</p>}
           faceRight={
             <div className={`${styles.fullSize} ${styles.timer}`}>
               <AnimatedTimer
-                animationClass={`${styles.animation} ${
-                  [GameStates.ON, GameStates.BOARD_SETUP].includes(gameState)
-                    ? styles.setup
-                    : styles.teardown
-                }`}
-                animationEventTypes={["animationend"]}
-                animationNames={SLIDE_X_ANIMATION_NAMES}
+                animationClass={`${styles.animation} ${innerFaceAnimClass}`}
                 gameState={gameState}
                 stop={stop}
               />
@@ -150,13 +131,7 @@ export default function App() {
           faceTop={
             <div className={`${styles.fullSize} ${styles.score}`}>
               <AnimatedScore
-                animationClass={`${styles.animation} ${
-                  [GameStates.ON, GameStates.BOARD_SETUP].includes(gameState)
-                    ? styles.setup
-                    : styles.teardown
-                }`}
-                animationEventTypes={["animationend"]}
-                animationNames={SLIDE_X_ANIMATION_NAMES}
+                animationClass={`${styles.animation} ${innerFaceAnimClass}`}
                 score={score}
               />
             </div>

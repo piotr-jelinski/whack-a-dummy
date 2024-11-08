@@ -51,7 +51,6 @@ export default function Board({ gameState, onStateChange }: BoardProps) {
             animationClass={`${styles.animation} ${
               gameState === GameStates.BOARD_SETUP && styles.setup
             } ${gameState === GameStates.BOARD_TEARDOWN && styles.teardown}`}
-            animationEventTypes={["animationend"]}
             animationNames={HOLE_ANIMATION_NAMES}
             isActive={isActive}
             key={index}
