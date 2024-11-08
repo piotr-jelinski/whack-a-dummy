@@ -91,7 +91,7 @@ export default function App() {
           animationNames={CUBOID_ANIMATION_NAMES}
           faceBack={
             <div className={`${styles.fullSize} ${styles.board}`}>
-              {gameState === GameStates.ON && <PawnSpawner />}
+              {gameState === GameStates.ON && <PawnSpawner stop={stop} />}
               <Board
                 gameState={gameState}
                 onStateChange={onBoardStatesChange}

@@ -5,22 +5,21 @@ import useAnimation from "../../hooks/useAnimation";
 
 type PawnProps = {
   pawn: Pawns;
+  remove: () => void;
 };
 
-export default function Pawn({ pawn }: PawnProps) {
+export default function Pawn({ pawn, remove }: PawnProps) {
   const pawnClassName = camelCase(`${pawn}`);
-  const onAnimation = (event: AnimationEvent) => {
-    console.log("Pawn :: onAnimation", event);
-  };
   const ref = useAnimation<HTMLButtonElement>({
     animationEventTypes: ["animationend"],
     animationNames: [styles.popUpAndDown],
-    onAnimation,
+    onAnimation: remove,
   });
 
   return (
     <button
       className={`${styles.pawn} ${styles[pawnClassName]}`}
+      onClick={remove}
       ref={ref}
     ></button>
   );

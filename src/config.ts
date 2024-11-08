@@ -32,9 +32,11 @@ export const GAME_ELEMENTS_VISIBLE_STATES = [
   GameStates.ON,
 ];
 export const HOLE_COUNT = 25;
-export const GAME_DURATION_S = 600;
+export const GAME_DURATION_S = 60;
 export const INITIAL_PAWN_COUNT = 5;
 export const PAWN_SPAWN_DELAY_MS = 600;
+export const START_PAWNS_ON_BOARD = 3;
+export const MAX_PAWNS_ON_BOARD = 4;
 
 export const holeArray = Array.from({ length: HOLE_COUNT }).map(
   (_, index) => (index + 1) % 2 === 1
