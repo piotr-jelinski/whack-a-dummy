@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { GAME_DURATION, GameStates } from "../../config";
+import { GAME_DURATION_S, GameStates } from "../../config";
 import styles from "./Timer.module.scss";
 
 type TimerProps = {
@@ -15,7 +15,7 @@ export default function Timer({ gameState, stop }: TimerProps) {
   useEffect(() => {
     if (gameState === GameStates.BOARD_SETUP) {
       startTimeRef.current = Date.now();
-      setTime(GAME_DURATION);
+      setTime(GAME_DURATION_S);
     }
   }, [gameState, setTime]);
 
@@ -24,7 +24,7 @@ export default function Timer({ gameState, stop }: TimerProps) {
       intervalRef.current = setInterval(() => {
         setTime(() => {
           const timeLeft =
-            GAME_DURATION -
+            GAME_DURATION_S -
             Math.floor((Date.now() - startTimeRef.current) / 1000);
           if (timeLeft <= 0) {
             stop();

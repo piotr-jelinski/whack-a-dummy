@@ -81,7 +81,7 @@ export default function App() {
     <main className={`${styles.flexCenter} ${styles.fullSize}`}>
       <div className={styles.scene}>
         <AnimatedCuboid
-          animationClass={`${styles.sceneAnimation} ${
+          animationClass={`${styles.animation} ${
             ![GameStates.OFF, GameStates.SCENE_TEARDOWN].includes(gameState) &&
             styles.setup
           } ${

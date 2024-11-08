@@ -21,7 +21,3 @@ export function* shuffledPawnGenerator(pawns: Pawns[]) {
     yield shuffledPawns[i];
   }
 }
-
-export default function delay<T>(value: T, ms: number) {
-  return new Promise<T>((resolve) => setTimeout(() => resolve(value), ms));
-}

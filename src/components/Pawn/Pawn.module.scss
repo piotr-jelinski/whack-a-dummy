@@ -1,15 +1,21 @@
 .pawn {
+  --pawn-duration: 2000ms;
   --pawn-height: 0;
-  --pawn-translate-y: calc(var(--pawn-height) * -0.5);
+  --pawn-rotate-x: -90deg;
+  --pawn-rotate-y: 30deg;
+  --pawn-translate-y: calc(var(--pawn-height) * 0.5);
+  --pawn-translate-y-popped: calc(var(--pawn-height) * -0.5);
+  --pawn-translate-z: calc(-0.01 * var(--screen-size));
 
+  animation: popUpAndDown var(--pawn-duration) both;
   background-color: #fff;
   background-repeat: no-repeat;
   background-size: cover;
   cursor: grab;
   height: var(--pawn-height);
   position: absolute;
-  transform: rotateX(-90deg) rotateY(30deg) translateY(var(--pawn-translate-y))
-    translateZ(calc(-0.01 * var(--screen-size)));
+  transform: rotateX(var(--pawn-rotate-x)) rotateY(var(--pawn-rotate-y))
+    translateY(var(--pawn-translate-y)) translateZ(var(--pawn-translate-z));
 
   &.awakenedWellnessWarrior {
     --pawn-height: calc(0.17 * var(--screen-size));
@@ -58,5 +64,26 @@
 
     background-image: url("../../../public/images/wrap-it-up-worrywart.svg");
     width: calc(0.08 * var(--screen-size));
+  }
+}
+
+@keyframes popUpAndDown {
+  0% {
+    transform: rotateX(var(--pawn-rotate-x)) rotateY(var(--pawn-rotate-y))
+      translateY(var(--pawn-translate-y)) translateZ(var(--pawn-translate-z));
+  }
+  40% {
+    transform: rotateX(var(--pawn-rotate-x)) rotateY(var(--pawn-rotate-y))
+      translateY(var(--pawn-translate-y-popped))
+      translateZ(var(--pawn-translate-z));
+  }
+  60% {
+    transform: rotateX(var(--pawn-rotate-x)) rotateY(var(--pawn-rotate-y))
+      translateY(var(--pawn-translate-y-popped))
+      translateZ(var(--pawn-translate-z));
+  }
+  100% {
+    transform: rotateX(var(--pawn-rotate-x)) rotateY(var(--pawn-rotate-y))
+      translateY(var(--pawn-translate-y)) translateZ(var(--pawn-translate-z));
   }
 }

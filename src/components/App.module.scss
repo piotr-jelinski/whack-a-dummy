@@ -18,7 +18,7 @@
   height: calc(var(--screen-size) * 0.8);
   perspective: calc(var(--screen-size) * 2);
   width: calc(var(--screen-size) * 0.8);
-  .sceneAnimation {
+  .animation {
     transform-style: preserve-3d;
     &.setup {
       animation: sceneOn var(--scene-setup-duration) both;

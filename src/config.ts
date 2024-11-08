@@ -32,15 +32,16 @@ export const GAME_ELEMENTS_VISIBLE_STATES = [
   GameStates.ON,
 ];
 export const HOLE_COUNT = 25;
-export const GAME_DURATION = 600;
+export const GAME_DURATION_S = 600;
 export const INITIAL_PAWN_COUNT = 5;
+export const PAWN_SPAWN_DELAY_MS = 600;
 
 export const holeArray = Array.from({ length: HOLE_COUNT }).map(
   (_, index) => (index + 1) % 2 === 1
 );
-export const activeHoleArray = holeArray
-  .filter((isActive) => isActive)
-  .map((_, index) => index);
+export const activeHoleIndexArray = holeArray
+  .map((isActive, index) => (isActive ? index : null))
+  .filter((i) => i !== null);
 
 export const pawnMap = new Map<Pawns, PawnSettings>([
   [
