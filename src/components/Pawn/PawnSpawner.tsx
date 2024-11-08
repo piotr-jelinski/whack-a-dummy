@@ -40,17 +40,19 @@ export default function PawnSpawner({ stop }: PawnSpawnerProps) {
     }
 
     const { done, value } = pawnsGenerator.next();
-    if (done) {
-      stop();
+    if (!done && value) {
+      const holeIndex = availableHoles.current.pop()!;
+      setPawns((pawns) => new Map(pawns).set(holeIndex, value));
       return;
     }
 
-    const holeIndex = availableHoles.current.pop()!;
-    setPawns((pawns) => new Map(pawns).set(holeIndex, value));
+    if (availableHoles.current.length === activeHoleIndexArray.length) {
+      stop();
+    }
   }, [pawnsGenerator, setPawns, stop]);
 
   const popPawn = useCallback(
-    (index: number) => () => {
+    (index: number) => {
       availableHoles.current = shuffle([...availableHoles.current, index]);
       setPawns((pawns) => {
         const newPawnMap = new Map(pawns);
@@ -80,7 +82,7 @@ export default function PawnSpawner({ stop }: PawnSpawnerProps) {
 
         return pawn && isActive ? (
           <div className={styles.field} key={`${index}-${pawn}`}>
-            <Pawn pawn={pawn} remove={popPawn(index)} />
+            <Pawn index={index} pawn={pawn} remove={popPawn} />
           </div>
         ) : (
           <div key={index} />
