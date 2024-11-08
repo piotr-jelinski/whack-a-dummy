@@ -9,6 +9,11 @@
   width: 100%;
 }
 
+.board {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
 .scene {
   height: calc(var(--screen-size) * 0.8);
   perspective: calc(var(--screen-size) * 2);

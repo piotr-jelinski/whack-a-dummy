@@ -1,0 +1,18 @@
+.spawner {
+  --fields-per-side: 5;
+  display: grid;
+  grid-template-columns: repeat(var(--fields-per-side), 1fr);
+  grid-template-rows: repeat(var(--fields-per-side), 1fr);
+  height: 100%;
+  padding: 5%;
+  position: absolute;
+  transform-style: preserve-3d;
+  width: 100%;
+
+  .field {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    transform-style: preserve-3d;
+  }
+}

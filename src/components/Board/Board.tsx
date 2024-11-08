@@ -3,6 +3,7 @@ import {
   GameStates,
   GAME_ELEMENTS_VISIBLE_STATES,
   BoardStates,
+  HOLE_COUNT,
 } from "../../config";
 import Hole from "./Hole";
 import withAnimation from "../../hocs/withAnimation";
@@ -15,7 +16,6 @@ type BoardProps = {
   onStateChange: (state: BoardStates) => void;
 };
 
-const HOLE_COUNT = 25;
 const HOLE_ANIMATION_NAMES = [styles.grow, styles.shrink];
 
 export default function Board({ gameState, onStateChange }: BoardProps) {
@@ -42,23 +42,22 @@ export default function Board({ gameState, onStateChange }: BoardProps) {
     [onStateChange]
   );
 
-  return (
+  return showHoles ? (
     <div className={styles.board}>
-      {showHoles &&
-        Array.from({ length: HOLE_COUNT }).map((_, index) => {
-          return (
-            <AnimatedHole
-              animationClass={`${styles.animation} ${
-                gameState === GameStates.BOARD_SETUP && styles.setup
-              } ${gameState === GameStates.BOARD_TEARDOWN && styles.teardown}`}
-              animationEventTypes={["animationend"]}
-              animationNames={HOLE_ANIMATION_NAMES}
-              index={index}
-              key={index}
-              onAnimation={onHoleAnimation}
-            />
-          );
-        })}
+      {Array.from({ length: HOLE_COUNT }).map((_, index) => {
+        return (
+          <AnimatedHole
+            animationClass={`${styles.animation} ${
+              gameState === GameStates.BOARD_SETUP && styles.setup
+            } ${gameState === GameStates.BOARD_TEARDOWN && styles.teardown}`}
+            animationEventTypes={["animationend"]}
+            animationNames={HOLE_ANIMATION_NAMES}
+            index={index}
+            key={index}
+            onAnimation={onHoleAnimation}
+          />
+        );
+      })}
     </div>
-  );
+  ) : null;
 }

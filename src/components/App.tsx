@@ -6,6 +6,7 @@ import Stop from "./Stop/Stop";
 import Score from "./Score/Score";
 import Timer from "./Timer/Timer";
 import { BoardStates, GameStates, INTERACTIVE_STATES } from "../config";
+import PawnSpawner from "./Pawn/PawnSpawner";
 import styles from "./App.module.scss";
 
 // delete this import
@@ -89,7 +90,13 @@ export default function App() {
           animationEventTypes={["animationend"]}
           animationNames={CUBOID_ANIMATION_NAMES}
           faceBack={
-            <Board gameState={gameState} onStateChange={onBoardStatesChange} />
+            <div className={`${styles.fullSize} ${styles.board}`}>
+              {gameState === GameStates.ON && <PawnSpawner />}
+              <Board
+                gameState={gameState}
+                onStateChange={onBoardStatesChange}
+              />
+            </div>
           }
           faceBottom={
             <div className={`${styles.fullSize} ${styles.stop}`}>
