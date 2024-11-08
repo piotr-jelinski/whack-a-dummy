@@ -4,6 +4,7 @@ import {
   GAME_ELEMENTS_VISIBLE_STATES,
   BoardStates,
   HOLE_COUNT,
+  holeArray,
 } from "../../config";
 import Hole from "./Hole";
 import withAnimation from "../../hocs/withAnimation";
@@ -44,7 +45,7 @@ export default function Board({ gameState, onStateChange }: BoardProps) {
 
   return showHoles ? (
     <div className={styles.board}>
-      {Array.from({ length: HOLE_COUNT }).map((_, index) => {
+      {holeArray.map((isActive, index) => {
         return (
           <AnimatedHole
             animationClass={`${styles.animation} ${
@@ -52,7 +53,7 @@ export default function Board({ gameState, onStateChange }: BoardProps) {
             } ${gameState === GameStates.BOARD_TEARDOWN && styles.teardown}`}
             animationEventTypes={["animationend"]}
             animationNames={HOLE_ANIMATION_NAMES}
-            index={index}
+            isActive={isActive}
             key={index}
             onAnimation={onHoleAnimation}
           />

@@ -1,3 +1,5 @@
+import { PawnSettings } from "./types";
+
 export enum GameStates {
   OFF = "off",
   SCENE_SETUP = "scene-setup",
@@ -7,38 +9,40 @@ export enum GameStates {
   ON = "on",
 }
 
+export enum BoardStates {
+  SET_UP = "set-up",
+  TORN_DOWN = "torn-down",
+}
+
+export enum Pawns {
+  AWAKENED_WELLNESS_WARRIOR = "awakened-wellness-warrior",
+  BEWITCHED_OFFICE_DIVA = "bewitched-office-diva",
+  LIFELESS_TEAM_PLAYER = "lifeless-team-player",
+  MONSTER_OF_MONEYMAKING = "monster-of-moneymaking",
+  PHANTOM_OF_THE_LEDGER = "phantom-of-the-ledger",
+  SCARECROW_OF_ACCOUNTABILITY = "scarecrow-of-accountability",
+  SHADOWY_EXECUTIVE = "shadowy-executive",
+  WRAP_IT_UP_WORRYWART = "wrap-it-up-worrywart",
+}
+
 export const INTERACTIVE_STATES = [GameStates.OFF, GameStates.ON];
 export const GAME_ELEMENTS_VISIBLE_STATES = [
   GameStates.BOARD_SETUP,
   GameStates.BOARD_TEARDOWN,
   GameStates.ON,
 ];
-
-export enum BoardStates {
-  SET_UP = "set-up",
-  TORN_DOWN = "torn-down",
-}
-
 export const HOLE_COUNT = 25;
 export const GAME_DURATION = 600;
+export const INITIAL_PAWN_COUNT = 5;
 
-export enum Pawns {
-  AWAKENED_WELLNESS_WARRIOR = "awakened-wellness-warrior", //2 - 20
-  BEWITCHED_OFFICE_DIVA = "bewitched-office-diva", //4 - 15
-  LIFELESS_TEAM_PLAYER = "lifeless-team-player", // 1 - 20
-  MONSTER_OF_MONEYMAKING = "monster-of-moneymaking", //5 - 10
-  PHANTOM_OF_THE_LEDGER = "phantom-of-the-ledger", //6 - 10
-  SCARECROW_OF_ACCOUNTABILITY = "scarecrow-of-accountability", //7 - 5
-  SHADOWY_EXECUTIVE = "shadowy-executive", //8 - 5
-  WRAP_IT_UP_WORRYWART = "wrap-it-up-worrywart", //3 - 15
-}
+export const holeArray = Array.from({ length: HOLE_COUNT }).map(
+  (_, index) => (index + 1) % 2 === 1
+);
+export const activeHoleArray = holeArray
+  .filter((isActive) => isActive)
+  .map((_, index) => index);
 
-export type PawnSettings = {
-  occurrences: number;
-  points: number;
-};
-
-export const PawnMap = new Map<Pawns, PawnSettings>([
+export const pawnMap = new Map<Pawns, PawnSettings>([
   [
     Pawns.AWAKENED_WELLNESS_WARRIOR,
     {
@@ -50,7 +54,7 @@ export const PawnMap = new Map<Pawns, PawnSettings>([
     Pawns.BEWITCHED_OFFICE_DIVA,
     {
       occurrences: 15,
-      points: 4,
+      points: 6,
     },
   ],
   [
@@ -64,35 +68,35 @@ export const PawnMap = new Map<Pawns, PawnSettings>([
     Pawns.MONSTER_OF_MONEYMAKING,
     {
       occurrences: 10,
-      points: 5,
+      points: 8,
     },
   ],
   [
     Pawns.PHANTOM_OF_THE_LEDGER,
     {
       occurrences: 10,
-      points: 6,
+      points: 10,
     },
   ],
   [
     Pawns.SCARECROW_OF_ACCOUNTABILITY,
     {
       occurrences: 5,
-      points: 7,
+      points: 12,
     },
   ],
   [
     Pawns.SHADOWY_EXECUTIVE,
     {
       occurrences: 5,
-      points: 8,
+      points: 14,
     },
   ],
   [
     Pawns.WRAP_IT_UP_WORRYWART,
     {
       occurrences: 15,
-      points: 3,
+      points: 4,
     },
   ],
 ]);

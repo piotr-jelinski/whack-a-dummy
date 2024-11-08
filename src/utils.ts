@@ -1,12 +1,12 @@
 import shuffle from "lodash.shuffle";
-import { PawnMap, Pawns } from "./config";
+import { pawnMap, Pawns } from "./config";
 
 export function generatePawnOccurrenceArray() {
-  const pawns = Array.from(PawnMap.keys());
+  const pawns = Array.from(pawnMap.keys());
   const pawnOccurrences: Pawns[] = [];
   for (let i = 0; i < pawns.length; i++) {
     const pawn = pawns[i];
-    const { occurrences } = PawnMap.get(pawn)!;
+    const { occurrences } = pawnMap.get(pawn)!;
     for (let j = 0; j < occurrences; j++) {
       pawnOccurrences.push(pawn);
     }

@@ -9,3 +9,8 @@ export type TransitionEventType =
   | "transitionend"
   | "transitionrun"
   | "transitionstart";
+
+export type PawnSettings = {
+  occurrences: number;
+  points: number;
+};
