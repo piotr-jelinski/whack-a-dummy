@@ -19,15 +19,19 @@
      id="g1047"
      transform="matrix(0.99410192,0,0,0.98612017,0.03959946,0.33103011)">
     <path
+       id="rect1575"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.485885;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 0.21426212,-0.05233818 H 31.478376 V 27.917307 H 0.21426212 Z" />
+    <path
        id="rect10"
        style="fill:#000000;stroke:none;stroke-width:0.268506"
        d="M -0.02868082,-0.0506429 V 10.649479 H 0.58807523 A 15.497981,12.307487 0 0 1 15.817603,0.62270099 15.497981,12.307487 0 0 1 31.04713,10.649479 h 0.674189 V -0.0506429 Z" />
     <path
        id="path1061"
-       style="fill:none;stroke:#000000;stroke-width:0.414479;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.414479;stroke-miterlimit:4;stroke-dasharray:none"
        d="m 19.891606,9.687852 c 0,-0.6041155 -3.718949,-2.0588116 -3.718949,-2.0588116 0,0 -3.718949,1.4546963 -3.718949,2.0588116" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.557742;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.557742;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 10.308935,2.4437689 4.775227,2.0145682 v 0 L 15.00942,2.4588578"
        id="path1322" />
     <path
@@ -47,13 +51,9 @@
        style="fill:#ff0000;stroke:#000000;stroke-width:0.239461"
        d="M 26.011542,7.745152 A 1.0001571,0.86862594 0 0 1 25.011385,8.613778 1.0001571,0.86862594 0 0 1 24.011228,7.745152 1.0001571,0.86862594 0 0 1 25.011385,6.876526 1.0001571,0.86862594 0 0 1 26.011542,7.745152 Z" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.5334;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.5334;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 21.712058,2.3512923 -4.867763,2.0125146 v 0 l 0.07619,-1.997441"
        id="path1436" />
-    <path
-       id="rect1575"
-       style="fill:none;stroke:#000000;stroke-width:0.485885;stroke-miterlimit:4;stroke-dasharray:none"
-       d="M 0.21426212,-0.05233818 H 31.478376 V 27.917307 H 0.21426212 Z" />
     <path
        id="rect1955"
        style="fill:#800000;stroke:#000000;stroke-width:0.508954;stroke-miterlimit:4;stroke-dasharray:none"

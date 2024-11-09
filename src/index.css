@@ -25,6 +25,7 @@
 html,
 body,
 #root {
+  font-family: Arial, sans-serif;
   font-size: calc(var(--screen-size) * 0.015);
   height: 100%;
   margin: 0;

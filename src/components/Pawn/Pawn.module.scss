@@ -8,7 +8,6 @@
   --pawn-translate-z: calc(-0.01 * var(--screen-size));
 
   animation: popUpAndDown var(--pawn-duration) both;
-  background-color: #fff;
   background-repeat: no-repeat;
   background-size: cover;
   cursor: grab;

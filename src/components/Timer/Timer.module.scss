@@ -1,13 +1,13 @@
 @import "../../animations.scss";
 
 .container {
-  --distance: calc(10rem);
+  --distance: calc(11rem);
 
   color: #fff;
   font-size: 9rem;
-  margin-left: -9rem;
+  margin-left: -10rem;
   overflow: hidden;
-  width: 9rem;
+  width: 10rem;
 
   &.setup {
     animation: slideInX var(--board-teardown-duration) ease-out both;
