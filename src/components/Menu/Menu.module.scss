@@ -8,7 +8,6 @@
 
   * {
     font-size: calc(var(--screen-size) * 0.04);
-    color: #000;
   }
 
   button {
@@ -16,10 +15,10 @@
     margin: 1rem;
     padding: 1rem;
     position: relative;
-    z-index: 1000;
+    z-index: 1;
 
-    &:before {
-      border-left: calc(var(--screen-size) * 0.016) solid black;
+    &::before {
+      border-left: calc(var(--screen-size) * 0.016) solid #fff;
       border-top: calc(var(--screen-size) * 0.008) solid transparent;
       border-bottom: calc(var(--screen-size) * 0.008) solid transparent;
       content: "";
@@ -29,7 +28,7 @@
       transform: translateY(-50%);
       width: 0;
     }
-    &:after {
+    &::after {
       background-color: rgba(0, 0, 0, 0.2);
       border-radius: 10%;
       bottom: 0;
@@ -42,7 +41,7 @@
       transition: opacity 0.3s ease;
       z-index: -1;
     }
-    &:hover:after {
+    &:hover::after {
       opacity: 1;
     }
   }
