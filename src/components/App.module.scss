@@ -104,34 +104,6 @@
 .stop {
   display: flex;
   justify-content: flex-end;
-  .animation {
-    --distance: calc(var(--screen-size) * 0.4);
-    transform-style: preserve-3d;
-    &.setup {
-      animation: slideInY var(--board-setup-duration) both;
-    }
-    &.teardown {
-      animation: slideOutY var(--board-teardown-duration) both;
-    }
-  }
-}
-
-@keyframes slideInY {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(var(--distance));
-  }
-}
-
-@keyframes slideOutY {
-  from {
-    transform: translateY(var(--distance));
-  }
-  to {
-    transform: translateY(0);
-  }
 }
 
 .score {

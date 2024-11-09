@@ -1,6 +1,33 @@
-.stop {
+.container {
+  --distance: calc(var(--screen-size) * -0.4);
+
   color: white;
+  cursor: pointer;
   font-size: 2rem;
   font-weight: bold;
-  transform: rotateX(180deg);
+
+  &.setup {
+    animation: slideInY var(--board-setup-duration) both;
+  }
+  &.teardown {
+    animation: slideOutY var(--board-teardown-duration) both;
+  }
+}
+
+@keyframes slideInY {
+  from {
+    transform: rotateX(180deg) translateY(0);
+  }
+  to {
+    transform: rotateX(180deg) translateY(var(--distance));
+  }
+}
+
+@keyframes slideOutY {
+  from {
+    transform: rotateX(180deg) translateY(var(--distance));
+  }
+  to {
+    transform: rotateX(180deg) translateY(0);
+  }
 }

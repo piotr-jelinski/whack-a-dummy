@@ -21,7 +21,6 @@ export default function Pawn({ addScore, index, pawn, remove }: PawnProps) {
   }, [addScore, pawn, removePawn]);
 
   const ref = useAnimation<HTMLButtonElement>({
-    animationEventTypes: ["animationend"],
     animationNames: [styles.popUpAndDown],
     onAnimation: removePawn,
   });

@@ -8,6 +8,7 @@ import {
   PAWN_SPAWN_DELAY_MS,
   START_PAWNS_ON_BOARD,
   Pawns,
+  GameStates,
 } from "../../config";
 import styles from "./PawnSpawner.module.scss";
 import {
@@ -26,7 +27,7 @@ type PawnMapValue = {
   value: Pawns;
 };
 
-export default function PawnSpawner({ addScore, stop }: PawnSpawnerProps) {
+function PawnSpawner({ addScore, stop }: PawnSpawnerProps) {
   const availableHolesRef = useRef(shuffle(activeHoleIndexArray));
   const isDoneRef = useRef(false);
   const [pawns, setPawns] = useState<Map<number, PawnMapValue>>(new Map());
@@ -113,4 +114,15 @@ export default function PawnSpawner({ addScore, stop }: PawnSpawnerProps) {
       })}
     </div>
   );
+}
+
+type PawnSpawnerWrapperProps = PawnSpawnerProps & {
+  gameState: GameStates;
+};
+
+export default function PawnSpawnerWrapper({
+  gameState,
+  ...rest
+}: PawnSpawnerWrapperProps) {
+  return gameState === GameStates.ON ? <PawnSpawner {...rest} /> : null;
 }

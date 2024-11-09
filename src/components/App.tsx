@@ -11,7 +11,6 @@ import PawnSpawner from "./Pawn/PawnSpawner";
 import styles from "./App.module.scss";
 
 const AnimatedCuboid = withAnimation(Cuboid);
-const AnimatedStop = withAnimation(Stop);
 const AnimatedScore = withAnimation(Score);
 const AnimatedTimer = withAnimation(Timer);
 
@@ -91,9 +90,11 @@ export default function App() {
           animationNames={CUBOID_ANIMATION_NAMES}
           faceBack={
             <div className={`${styles.fullSize} ${styles.board}`}>
-              {gameState === GameStates.ON && (
-                <PawnSpawner addScore={addScore} stop={stop} />
-              )}
+              <PawnSpawner
+                addScore={addScore}
+                gameState={gameState}
+                stop={stop}
+              />
               <Board
                 gameState={gameState}
                 onStateChange={onBoardStatesChange}
@@ -102,9 +103,9 @@ export default function App() {
           }
           faceBottom={
             <div className={`${styles.fullSize} ${styles.stop}`}>
-              <AnimatedStop
-                animationClass={`${styles.animation} ${innerFaceAnimClass}`}
+              <Stop
                 disabled={!INTERACTIVE_STATES.includes(gameState)}
+                gameState={gameState}
                 stop={stop}
               />
             </div>

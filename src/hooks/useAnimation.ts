@@ -2,7 +2,7 @@ import { MutableRefObject, useEffect, useRef } from "react";
 import type { AnimationEventType } from "../types";
 
 type AnimationProps<T> = {
-  animationEventTypes: AnimationEventType[];
+  animationEventTypes?: AnimationEventType[];
   animationNames?: string[];
   externalRef?: MutableRefObject<T | null>;
   onAnimation?: (event: AnimationEvent) => void;

@@ -31,6 +31,8 @@ export const GAME_ELEMENTS_VISIBLE_STATES = [
   GameStates.BOARD_TEARDOWN,
   GameStates.ON,
 ];
+export const GAME_IN_SET_UP_STATE = [GameStates.ON, GameStates.BOARD_SETUP];
+
 export const HOLE_COUNT = 25;
 export const GAME_DURATION_S = 60;
 export const INITIAL_PAWN_COUNT = 5;
