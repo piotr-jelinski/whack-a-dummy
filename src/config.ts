@@ -25,12 +25,6 @@ export enum Pawns {
   WRAP_IT_UP_WORRYWART = "wrap-it-up-worrywart",
 }
 
-export const INTERACTIVE_STATES = [GameStates.OFF, GameStates.ON];
-export const GAME_ELEMENTS_VISIBLE_STATES = [
-  GameStates.BOARD_SETUP,
-  GameStates.BOARD_TEARDOWN,
-  GameStates.ON,
-];
 export const GAME_IN_SET_UP_STATE = [GameStates.ON, GameStates.BOARD_SETUP];
 
 export const HOLE_COUNT = 25;

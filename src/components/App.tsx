@@ -71,9 +71,8 @@ export default function App() {
   }, [bestScore, gameState, lastScore, score, setBestScore, setLastScore]);
 
   const cuboidAnimClass =
-    (![GameStates.OFF, GameStates.SCENE_TEARDOWN].includes(gameState) &&
-      styles.setup) ||
-    ([GameStates.SCENE_TEARDOWN].includes(gameState) && styles.teardown) ||
+    (GameStates.SCENE_TEARDOWN === gameState && styles.teardown) ||
+    (GameStates.OFF !== gameState && styles.setup) ||
     "";
 
   return (
