@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/whack-a-dummy/static/css/main.0d645559.css",
+    "main.js": "/whack-a-dummy/static/js/main.76ef40a2.js",
+    "static/js/453.bb4f3ce0.chunk.js": "/whack-a-dummy/static/js/453.bb4f3ce0.chunk.js",
+    "static/media/monster-of-moneymaking.svg": "/whack-a-dummy/static/media/monster-of-moneymaking.5b522d165088b01d7cca.svg",
+    "static/media/scarecrow-of-accountability.svg": "/whack-a-dummy/static/media/scarecrow-of-accountability.33a5aa4b6215cf48b72c.svg",
+    "static/media/phantom-of-the-ledger.svg": "/whack-a-dummy/static/media/phantom-of-the-ledger.fcbaf1b6bf3c33739e27.svg",
+    "static/media/wrap-it-up-worrywart.svg": "/whack-a-dummy/static/media/wrap-it-up-worrywart.fc3ae554471735351312.svg",
+    "static/media/shadowy-executive.svg": "/whack-a-dummy/static/media/shadowy-executive.01a52f43e0dd4fe2afc8.svg",
+    "static/media/lifeless-team-player.svg": "/whack-a-dummy/static/media/lifeless-team-player.0d24ae6a6c5500c5cc88.svg",
+    "static/media/awakened-wellness-warrior.svg": "/whack-a-dummy/static/media/awakened-wellness-warrior.b71ac3f1555348e8c7e6.svg",
+    "static/media/bewitched-office-diva.svg": "/whack-a-dummy/static/media/bewitched-office-diva.1b47f8b84afec6cbbf09.svg",
+    "index.html": "/whack-a-dummy/index.html",
+    "main.0d645559.css.map": "/whack-a-dummy/static/css/main.0d645559.css.map",
+    "main.76ef40a2.js.map": "/whack-a-dummy/static/js/main.76ef40a2.js.map",
+    "453.bb4f3ce0.chunk.js.map": "/whack-a-dummy/static/js/453.bb4f3ce0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0d645559.css",
+    "static/js/main.76ef40a2.js"
+  ]
+}
