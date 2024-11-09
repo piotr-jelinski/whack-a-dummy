@@ -12,26 +12,26 @@
     position: absolute;
     transform-style: preserve-3d;
     &.front {
-      background-color: #a1887f;
+      background-color: rgba(161, 136, 127, 1);
       height: var(--face-size-y);
       transform: translateZ(calc(var(--face-size-z) / 2));
       width: var(--face-size-x);
     }
     &.back {
-      background-color: #a1887f;
+      background-color: rgba(161, 136, 127, 1);
       height: var(--face-size-y);
       transform: rotateY(180deg) translateZ(calc(var(--face-size-z) / 2));
       width: var(--face-size-x);
     }
 
     &.left {
-      background-color: #81685f;
+      background-color: rgba(129, 104, 95, 1);
       height: var(--face-size-y);
       transform: rotateY(-90deg) translateZ(calc(var(--face-size-z) / 2));
       width: var(--face-size-z);
     }
     &.right {
-      background-color: #81685f;
+      background-color: rgba(129, 104, 95, 1);
       height: var(--face-size-z);
       transform: rotateY(90deg) rotateZ(90deg)
         translateZ(calc(calc(var(--face-size-y) / 2)))
@@ -42,13 +42,13 @@
     }
 
     &.top {
-      background-color: #91786f;
+      background-color: rgba(145, 120, 111, 1);
       height: var(--face-size-z);
       transform: rotateX(90deg) translateZ(calc(var(--face-size-z) / 2));
       width: var(--face-size-x);
     }
     &.bottom {
-      background-color: #91786f;
+      background-color: rgba(145, 120, 111, 1);
       height: var(--face-size-z);
       justify-content: flex-end;
       transform: rotateX(-90deg)

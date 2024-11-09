@@ -18,9 +18,9 @@
     z-index: 1;
 
     &::before {
+      border-bottom: calc(var(--screen-size) * 0.008) solid rgba(0, 0, 0, 0);
       border-left: calc(var(--screen-size) * 0.016) solid #fff;
-      border-top: calc(var(--screen-size) * 0.008) solid transparent;
-      border-bottom: calc(var(--screen-size) * 0.008) solid transparent;
+      border-top: calc(var(--screen-size) * 0.008) solid rgba(0, 0, 0, 0);
       content: "";
       display: inline-block;
       height: 0;
