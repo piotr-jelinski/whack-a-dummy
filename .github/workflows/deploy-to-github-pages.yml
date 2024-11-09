@@ -24,6 +24,11 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Configure Git author
+        run: |
+          git config --local user.name "${{ vars.GH_USER_NAME }}"
+          git config --local user.email "${{ vars.GH_USER_EMAIL }}"
+
       - name: Deploy to GitHub Pages
         run: npm run deploy
         env:
