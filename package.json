@@ -1,6 +1,6 @@
 {
   "name": "whack-a-dummy",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "homepage": "https://piotr-jelinski.github.io/whack-a-dummy",
   "dependencies": {
