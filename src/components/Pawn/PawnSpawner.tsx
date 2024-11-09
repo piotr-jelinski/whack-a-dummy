@@ -10,11 +10,11 @@ import {
   Pawns,
   GameStates,
 } from "../../config";
-import styles from "./PawnSpawner.module.scss";
 import {
   generatePawnOccurrenceArray,
   shuffledPawnGenerator,
 } from "../../utils";
+import styles from "./PawnSpawner.module.scss";
 
 const pawnOccurrenceArray = generatePawnOccurrenceArray();
 

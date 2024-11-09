@@ -9,6 +9,7 @@ import Timer from "./Timer/Timer";
 import Menu from "./Menu/Menu";
 import { BoardStates, GameStates } from "../config";
 import PawnSpawner from "./Pawn/PawnSpawner";
+import { playEnd, playStart } from "../utils";
 import styles from "./App.module.scss";
 
 const AnimatedCuboid = withAnimation(Cuboid);
@@ -28,10 +29,12 @@ export default function App() {
   const play = useCallback(() => {
     setScore(0);
     setGameState(GameStates.SCENE_SETUP);
+    playStart();
   }, [setGameState, setScore]);
 
   const stop = useCallback(() => {
     setGameState(GameStates.BOARD_TEARDOWN);
+    playEnd();
   }, [setGameState]);
 
   const addScore = useCallback(

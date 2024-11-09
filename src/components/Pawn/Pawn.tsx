@@ -1,8 +1,9 @@
+import { useCallback } from "react";
 import camelCase from "lodash.camelcase";
 import { pawnMap, Pawns } from "../../config";
-import styles from "./Pawn.module.scss";
 import useAnimation from "../../hooks/useAnimation";
-import { useCallback } from "react";
+import { playWhack } from "../../utils";
+import styles from "./Pawn.module.scss";
 
 type PawnProps = {
   addScore: (points: number) => void;
@@ -16,6 +17,7 @@ export default function Pawn({ addScore, index, pawn, remove }: PawnProps) {
 
   const removePawn = useCallback(() => remove(index), [index, remove]);
   const onClick = useCallback(() => {
+    playWhack();
     addScore(pawnMap.get(pawn)!.points);
     removePawn();
   }, [addScore, pawn, removePawn]);
