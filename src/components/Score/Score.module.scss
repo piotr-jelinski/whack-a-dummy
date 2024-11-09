@@ -1,7 +1,18 @@
-.score {
+@import "../../animations.scss";
+
+.container {
+  --distance: calc(-19rem);
+
   color: #fff;
   font-size: 9rem;
   margin-right: -18rem;
-  width: 18rem;
   text-align: right;
+  width: 18rem;
+
+  &.setup {
+    animation: slideInX var(--board-teardown-duration) ease-out both;
+  }
+  &.teardown {
+    animation: slideOutX var(--board-teardown-duration) ease-in both;
+  }
 }

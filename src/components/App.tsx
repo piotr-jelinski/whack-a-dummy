@@ -11,7 +11,6 @@ import PawnSpawner from "./Pawn/PawnSpawner";
 import styles from "./App.module.scss";
 
 const AnimatedCuboid = withAnimation(Cuboid);
-const AnimatedScore = withAnimation(Score);
 
 const CUBOID_ANIMATION_NAMES = [styles.sceneOn, styles.sceneOff];
 
@@ -70,11 +69,6 @@ export default function App() {
     }
   }, [bestScore, gameState, lastScore, score, setBestScore, setLastScore]);
 
-  const innerFaceAnimClass = [GameStates.ON, GameStates.BOARD_SETUP].includes(
-    gameState
-  )
-    ? styles.setup
-    : styles.teardown;
   const cuboidAnimClass =
     (![GameStates.OFF, GameStates.SCENE_TEARDOWN].includes(gameState) &&
       styles.setup) ||
@@ -122,10 +116,7 @@ export default function App() {
           }
           faceTop={
             <div className={`${styles.fullSize} ${styles.score}`}>
-              <AnimatedScore
-                animationClass={`${styles.animation} ${innerFaceAnimClass}`}
-                score={score}
-              />
+              <Score gameState={gameState} score={score} />
             </div>
           }
           onAnimation={onCuboidAnimation}
