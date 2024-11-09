@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/whack-a-dummy/static/css/main.07c3eeea.css",
-    "main.js": "/whack-a-dummy/static/js/main.c61e4de7.js",
+    "main.js": "/whack-a-dummy/static/js/main.f6ea1c90.js",
     "static/js/453.bb4f3ce0.chunk.js": "/whack-a-dummy/static/js/453.bb4f3ce0.chunk.js",
     "static/media/monster-of-moneymaking.svg": "/whack-a-dummy/static/media/monster-of-moneymaking.5b522d165088b01d7cca.svg",
     "static/media/scarecrow-of-accountability.svg": "/whack-a-dummy/static/media/scarecrow-of-accountability.33a5aa4b6215cf48b72c.svg",
@@ -13,11 +13,11 @@
     "static/media/bewitched-office-diva.svg": "/whack-a-dummy/static/media/bewitched-office-diva.d11ae1feac8eca495415.svg",
     "index.html": "/whack-a-dummy/index.html",
     "main.07c3eeea.css.map": "/whack-a-dummy/static/css/main.07c3eeea.css.map",
-    "main.c61e4de7.js.map": "/whack-a-dummy/static/js/main.c61e4de7.js.map",
+    "main.f6ea1c90.js.map": "/whack-a-dummy/static/js/main.f6ea1c90.js.map",
     "453.bb4f3ce0.chunk.js.map": "/whack-a-dummy/static/js/453.bb4f3ce0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.07c3eeea.css",
-    "static/js/main.c61e4de7.js"
+    "static/js/main.f6ea1c90.js"
   ]
 }
