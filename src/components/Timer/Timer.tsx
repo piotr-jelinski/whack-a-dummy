@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { GAME_DURATION_S, GameStates } from "../../config";
+import {
+  GAME_DURATION_S,
+  GAME_IN_SET_UP_STATE,
+  GameStates,
+} from "../../config";
 import styles from "./Timer.module.scss";
 
 type TimerProps = {
@@ -11,6 +15,10 @@ export default function Timer({ gameState, stop }: TimerProps) {
   const [time, setTime] = useState(0);
   const startTimeRef = useRef(0);
   const intervalRef = useRef<NodeJS.Timeout>();
+
+  const animClass = GAME_IN_SET_UP_STATE.includes(gameState)
+    ? styles.setup
+    : styles.teardown;
 
   useEffect(() => {
     if (gameState === GameStates.BOARD_SETUP) {
@@ -45,5 +53,9 @@ export default function Timer({ gameState, stop }: TimerProps) {
     return () => clearInterval(intervalRef.current);
   }, [gameState, setTime, stop]);
 
-  return <div className={`${styles.timer}`}>{`${time}`.padStart(2, "0")}</div>;
+  return (
+    <div className={`${styles.container} ${animClass}`}>
+      {`${time}`.padStart(2, "0")}
+    </div>
+  );
 }

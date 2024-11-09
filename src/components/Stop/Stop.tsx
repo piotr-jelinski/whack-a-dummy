@@ -1,16 +1,20 @@
-import { GAME_IN_SET_UP_STATE, GameStates } from "../../config";
+import {
+  GAME_IN_SET_UP_STATE,
+  GameStates,
+  INTERACTIVE_STATES,
+} from "../../config";
 import styles from "./Stop.module.scss";
 
 type StopProps = {
-  disabled?: boolean;
   gameState: GameStates;
   stop: () => void;
 };
 
-export default function Stop({ disabled, gameState, stop }: StopProps) {
+export default function Stop({ gameState, stop }: StopProps) {
   const animClass = GAME_IN_SET_UP_STATE.includes(gameState)
     ? styles.setup
     : styles.teardown;
+  const disabled = !INTERACTIVE_STATES.includes(gameState);
 
   return (
     <button

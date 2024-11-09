@@ -125,17 +125,8 @@
 .timer {
   align-items: center;
   display: flex;
-  overflow: hidden;
   justify-content: flex-start;
-  .animation {
-    --distance: calc(10rem);
-    &.setup {
-      animation: slideInX var(--board-teardown-duration) ease-out both;
-    }
-    &.teardown {
-      animation: slideOutX var(--board-teardown-duration) ease-in both;
-    }
-  }
+  overflow: hidden;
 }
 
 @keyframes slideInX {

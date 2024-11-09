@@ -34,7 +34,7 @@ export const GAME_ELEMENTS_VISIBLE_STATES = [
 export const GAME_IN_SET_UP_STATE = [GameStates.ON, GameStates.BOARD_SETUP];
 
 export const HOLE_COUNT = 25;
-export const GAME_DURATION_S = 60;
+export const GAME_DURATION_S = 50;
 export const INITIAL_PAWN_COUNT = 5;
 export const PAWN_SPAWN_DELAY_MS = 600;
 // note that this will immediately spawn 2 pawns on the board, and then the interval will start adding more

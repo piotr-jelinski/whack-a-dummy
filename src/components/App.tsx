@@ -6,13 +6,12 @@ import Board from "./Board/Board";
 import Stop from "./Stop/Stop";
 import Score from "./Score/Score";
 import Timer from "./Timer/Timer";
-import { BoardStates, GameStates, INTERACTIVE_STATES } from "../config";
+import { BoardStates, GameStates } from "../config";
 import PawnSpawner from "./Pawn/PawnSpawner";
 import styles from "./App.module.scss";
 
 const AnimatedCuboid = withAnimation(Cuboid);
 const AnimatedScore = withAnimation(Score);
-const AnimatedTimer = withAnimation(Timer);
 
 const CUBOID_ANIMATION_NAMES = [styles.sceneOn, styles.sceneOff];
 
@@ -103,11 +102,7 @@ export default function App() {
           }
           faceBottom={
             <div className={`${styles.fullSize} ${styles.stop}`}>
-              <Stop
-                disabled={!INTERACTIVE_STATES.includes(gameState)}
-                gameState={gameState}
-                stop={stop}
-              />
+              <Stop gameState={gameState} stop={stop} />
             </div>
           }
           faceFront={
@@ -122,11 +117,7 @@ export default function App() {
           faceLeft={<p>Left</p>}
           faceRight={
             <div className={`${styles.fullSize} ${styles.timer}`}>
-              <AnimatedTimer
-                animationClass={`${styles.animation} ${innerFaceAnimClass}`}
-                gameState={gameState}
-                stop={stop}
-              />
+              <Timer gameState={gameState} stop={stop} />
             </div>
           }
           faceTop={

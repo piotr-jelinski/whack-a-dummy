@@ -1,0 +1,17 @@
+@keyframes slideInX {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(var(--distance));
+  }
+}
+
+@keyframes slideOutX {
+  from {
+    transform: translateX(var(--distance));
+  }
+  to {
+    transform: translateX(0);
+  }
+}

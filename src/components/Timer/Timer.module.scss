@@ -1,7 +1,18 @@
-.timer {
+@import "../../animations.scss";
+
+.container {
+  --distance: calc(10rem);
+
   color: #fff;
   font-size: 9rem;
   margin-left: -9rem;
   overflow: hidden;
   width: 9rem;
+
+  &.setup {
+    animation: slideInX var(--board-teardown-duration) ease-out both;
+  }
+  &.teardown {
+    animation: slideOutX var(--board-teardown-duration) ease-in both;
+  }
 }
