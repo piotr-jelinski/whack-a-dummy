@@ -1,76 +1,47 @@
-.flexCenter {
+.container {
   align-items: center;
   display: flex;
-  justify-content: center;
-}
-
-.fullSize {
   height: 100%;
+  justify-content: center;
   width: 100%;
-}
 
-.menu {
-  flex-direction: column;
-  transform-style: preserve-3d;
-
-  * {
-    font-size: calc(var(--screen-size) * 0.04);
-  }
-
-  button {
-    cursor: pointer;
-    margin: 1rem;
-    padding: 1rem;
+  .board {
+    flex-grow: 1;
     position: relative;
-    z-index: 1000;
-
-    &::before {
-      border-left: calc(var(--screen-size) * 0.016) solid black;
-      border-top: calc(var(--screen-size) * 0.008) solid transparent;
-      border-bottom: calc(var(--screen-size) * 0.008) solid transparent;
-      content: "";
-      display: inline-block;
-      height: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 0;
-    }
-    &::after {
-      background-color: rgba(0, 0, 0, 0.2);
-      border-radius: 10%;
-      bottom: 0;
-      content: "";
-      left: 0;
-      opacity: 0;
-      position: absolute;
-      right: 0;
-      top: 0;
-      transition: opacity 0.3s ease;
-      z-index: -1;
-    }
-    &:hover::after {
-      opacity: 1;
-    }
-  }
-}
-
-.board {
-  position: relative;
-  transform-style: preserve-3d;
-}
-
-.scene {
-  height: calc(var(--screen-size) * 0.8);
-  perspective: calc(var(--screen-size) * 2);
-  width: calc(var(--screen-size) * 0.8);
-  .animation {
     transform-style: preserve-3d;
-    &.setup {
-      animation: sceneOn var(--scene-setup-duration) both;
-    }
+  }
 
-    &.teardown {
-      animation: sceneOff var(--scene-teardown-duration) both;
+  .score {
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+
+  .timer {
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-start;
+    overflow: hidden;
+  }
+
+  .scene {
+    height: calc(var(--screen-size) * 0.8);
+    perspective: calc(var(--screen-size) * 2);
+    width: calc(var(--screen-size) * 0.8);
+
+    .animation {
+      transform-style: preserve-3d;
+
+      &.setup {
+        animation: sceneOn var(--scene-setup-duration) both;
+      }
+
+      &.teardown {
+        animation: sceneOff var(--scene-teardown-duration) both;
+      }
     }
   }
 }
@@ -99,23 +70,4 @@
     transform: translateX(0) translateY(0) translateZ(0) rotateX(0) rotateY(0)
       rotateZ(0);
   }
-}
-
-.stop {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.score {
-  align-items: center;
-  display: flex;
-  overflow: hidden;
-  justify-content: flex-end;
-}
-
-.timer {
-  align-items: center;
-  display: flex;
-  justify-content: flex-start;
-  overflow: hidden;
 }

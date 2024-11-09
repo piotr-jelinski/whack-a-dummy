@@ -7,6 +7,7 @@
     --face-size-x: calc(var(--screen-size) * 0.8);
     --face-size-y: calc(var(--screen-size) * 0.8);
     --face-size-z: calc(var(--screen-size) * 0.16);
+
     display: flex;
     position: absolute;
     transform-style: preserve-3d;

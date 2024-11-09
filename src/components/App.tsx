@@ -6,6 +6,7 @@ import Board from "./Board/Board";
 import Stop from "./Stop/Stop";
 import Score from "./Score/Score";
 import Timer from "./Timer/Timer";
+import Menu from "./Menu/Menu";
 import { BoardStates, GameStates } from "../config";
 import PawnSpawner from "./Pawn/PawnSpawner";
 import styles from "./App.module.scss";
@@ -76,13 +77,13 @@ export default function App() {
     "";
 
   return (
-    <main className={`${styles.flexCenter} ${styles.fullSize}`}>
+    <main className={`${styles.container}`}>
       <div className={styles.scene}>
         <AnimatedCuboid
           animationClass={`${styles.animation} ${cuboidAnimClass}`}
           animationNames={CUBOID_ANIMATION_NAMES}
           faceBack={
-            <div className={`${styles.fullSize} ${styles.board}`}>
+            <div className={`${styles.board}`}>
               <PawnSpawner
                 addScore={addScore}
                 gameState={gameState}
@@ -94,28 +95,17 @@ export default function App() {
               />
             </div>
           }
-          faceBottom={
-            <div className={`${styles.fullSize} ${styles.stop}`}>
-              <Stop gameState={gameState} stop={stop} />
-            </div>
-          }
+          faceBottom={<Stop gameState={gameState} stop={stop} />}
           faceFront={
-            <div
-              className={`${styles.flexCenter} ${styles.fullSize} ${styles.menu}`}
-            >
-              <button onClick={play}>Play</button>
-              <div>Last score: {lastScore}</div>
-              <div>Best score: {bestScore}</div>
-            </div>
+            <Menu bestScore={bestScore} lastScore={lastScore} play={play} />
           }
-          faceLeft={<p>Left</p>}
           faceRight={
-            <div className={`${styles.fullSize} ${styles.timer}`}>
+            <div className={`${styles.timer}`}>
               <Timer gameState={gameState} stop={stop} />
             </div>
           }
           faceTop={
-            <div className={`${styles.fullSize} ${styles.score}`}>
+            <div className={`${styles.score}`}>
               <Score gameState={gameState} score={score} />
             </div>
           }
